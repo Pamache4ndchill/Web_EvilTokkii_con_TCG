@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
                         <a href="https://www.tiktok.com/@eviltokkii" target="_blank" rel="noopener noreferrer" className="arcade-footer-social-btn footer-btn-tiktok" title="TikTok">
                             <FontAwesomeIcon icon={faTiktok} /> TikTok
                         </a>
-                        <a href="https://x.com/EvilTokkii" target="_blank" rel="noopener noreferrer" className="arcade-footer-social-btn footer-btn-x" title="Twitter / X">
+                        <a href="https://x.com/EvilTokkii_" target="_blank" rel="noopener noreferrer" className="arcade-footer-social-btn footer-btn-x" title="Twitter / X">
                             <FontAwesomeIcon icon={faXTwitter} /> Twitter / X
                         </a>
                         <a href="https://discord.com/invite/Kxvw4KfSBF" target="_blank" rel="noopener noreferrer" className="arcade-footer-social-btn footer-btn-discord" title="Discord">

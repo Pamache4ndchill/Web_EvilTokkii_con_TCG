@@ -183,12 +183,12 @@ const Legal: React.FC = () => {
                 </a>
 
                 <a
-                  href="https://x.com/EvilTokkii"
+                  href="https://x.com/EvilTokkii_"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="legal-contact-btn btn-twitter"
                 >
-                  🌐 Mensaje Directo en X / Twitter (@EvilTokkii)
+                  🌐 Mensaje Directo en X / Twitter (@EvilTokkii_)
                 </a>
               </div>
 

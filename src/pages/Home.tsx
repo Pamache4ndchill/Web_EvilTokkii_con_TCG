@@ -461,7 +461,7 @@ const Home: React.FC = () => {
                         <a href="https://www.tiktok.com/@eviltokkii" target="_blank" rel="noopener noreferrer" className="social-card-btn social-tiktok">
                             <FontAwesomeIcon icon={faTiktok} /> TikTok
                         </a>
-                        <a href="https://x.com/EvilTokkii" target="_blank" rel="noopener noreferrer" className="social-card-btn social-x">
+                        <a href="https://x.com/EvilTokkii_" target="_blank" rel="noopener noreferrer" className="social-card-btn social-x">
                             <FontAwesomeIcon icon={faXTwitter} /> Twitter / X
                         </a>
                         <a href="https://discord.com/invite/Kxvw4KfSBF" target="_blank" rel="noopener noreferrer" className="social-card-btn social-discord">
