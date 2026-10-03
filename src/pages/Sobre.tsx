@@ -19,19 +19,19 @@ type ConfigMap = { [key: string]: ImageConfig };
 
 const DEFAULT_CONFIGS: ConfigMap = {
     img1: {
-        scale: 1.0,
+        scale: 1.28,
         offsetX: 0,
-        offsetY: 0,
+        offsetY: 2,
         fadeTop: 3,
         fadeBottom: 25,
         fadeLeft: 3,
         fadeRight: 3,
-        maxHeight: 620
+        maxHeight: 590
     },
     img2: {
-        scale: 1.0,
+        scale: 1.3,
         offsetX: 0,
-        offsetY: 0,
+        offsetY: -6,
         fadeTop: 3,
         fadeBottom: 25,
         fadeLeft: 3,
@@ -39,9 +39,9 @@ const DEFAULT_CONFIGS: ConfigMap = {
         maxHeight: 620
     },
     img3: {
-        scale: 1.0,
+        scale: 1.18,
         offsetX: 0,
-        offsetY: 0,
+        offsetY: -20,
         fadeTop: 3,
         fadeBottom: 25,
         fadeLeft: 3,
@@ -72,19 +72,19 @@ const getImageStyle = (cfg: ImageConfig): React.CSSProperties => {
 const Sobre: React.FC = () => {
     const [configs, setConfigs] = useState<ConfigMap>(() => {
         try {
-            const saved = localStorage.getItem('sobre_tuning_v1');
+            const saved = localStorage.getItem('sobre_tuning_v2');
             return saved ? { ...DEFAULT_CONFIGS, ...JSON.parse(saved) } : DEFAULT_CONFIGS;
         } catch {
             return DEFAULT_CONFIGS;
         }
     });
 
-    const [isPanelOpen, setIsPanelOpen] = useState<boolean>(true);
+    const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
     const [activeTab, setActiveTab] = useState<'img1' | 'img2' | 'img3'>('img1');
     const [copied, setCopied] = useState<boolean>(false);
 
     useEffect(() => {
-        localStorage.setItem('sobre_tuning_v1', JSON.stringify(configs));
+        localStorage.setItem('sobre_tuning_v2', JSON.stringify(configs));
     }, [configs]);
 
     const updateCurrent = (key: keyof ImageConfig, value: number) => {
