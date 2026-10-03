@@ -673,8 +673,8 @@
   gap: 0.75rem;
   padding: 1.1rem 1.4rem;
   border-radius: 14px;
-  border: 3px solid #180d2f;
-  box-shadow: 5px 5px 0 #180d2f;
+  border: 3.5px solid #000000;
+  box-shadow: 6px 6px 0 #000000;
   font-family: var(--font-display);
   font-size: 0.95rem;
   text-decoration: none;
@@ -684,13 +684,13 @@
 
 .social-card-btn:hover {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 #180d2f;
+  box-shadow: 3px 3px 0 #000000;
   filter: brightness(1.15);
 }
 
 .social-twitch { background: #9146ff; }
 .social-instagram { background: linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%); }
-.social-tiktok { background: #000000; border-color: var(--cyan); }
+.social-tiktok { background: #000000; }
 .social-x { background: #111111; }
 .social-discord { background: #5865f2; }
 

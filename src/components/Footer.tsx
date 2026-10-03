@@ -25,19 +25,19 @@ const Footer: React.FC = () => {
                     {/* Botones de Redes Sociales Sticker */}
                     <div className="arcade-footer-socials">
                         <a href="https://www.twitch.tv/eviltokkii" target="_blank" rel="noopener noreferrer" className="arcade-footer-social-btn footer-btn-twitch" title="Twitch">
-                            <FontAwesomeIcon icon={faTwitch} style={{ marginRight: '4px' }} /> Twitch
+                            <FontAwesomeIcon icon={faTwitch} /> Twitch
                         </a>
                         <a href="https://www.instagram.com/eviltokkii" target="_blank" rel="noopener noreferrer" className="arcade-footer-social-btn footer-btn-instagram" title="Instagram">
-                            <FontAwesomeIcon icon={faInstagram} style={{ marginRight: '4px' }} /> Instagram
+                            <FontAwesomeIcon icon={faInstagram} /> Instagram
                         </a>
                         <a href="https://www.tiktok.com/@eviltokkii" target="_blank" rel="noopener noreferrer" className="arcade-footer-social-btn footer-btn-tiktok" title="TikTok">
-                            <FontAwesomeIcon icon={faTiktok} style={{ marginRight: '4px' }} /> TikTok
+                            <FontAwesomeIcon icon={faTiktok} /> TikTok
                         </a>
-                        <a href="https://x.com/EvilTokkii" target="_blank" rel="noopener noreferrer" className="arcade-footer-social-btn footer-btn-x" title="X / Twitter">
-                            <FontAwesomeIcon icon={faXTwitter} style={{ marginRight: '4px' }} /> X
+                        <a href="https://x.com/EvilTokkii" target="_blank" rel="noopener noreferrer" className="arcade-footer-social-btn footer-btn-x" title="Twitter / X">
+                            <FontAwesomeIcon icon={faXTwitter} /> Twitter / X
                         </a>
                         <a href="https://discord.com/invite/Kxvw4KfSBF" target="_blank" rel="noopener noreferrer" className="arcade-footer-social-btn footer-btn-discord" title="Discord">
-                            <FontAwesomeIcon icon={faDiscord} style={{ marginRight: '4px' }} /> Discord
+                            <FontAwesomeIcon icon={faDiscord} /> Discord
                         </a>
                     </div>
                 </div>
