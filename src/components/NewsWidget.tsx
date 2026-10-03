@@ -64,42 +64,47 @@ const NewsWidget: React.FC<NewsWidgetProps> = ({ onActiveNewsChange }) => {
 
     if (loading || latestPosts.length === 0) return null;
 
-    const mainPost = latestPosts[0];
-    const sidePosts = latestPosts.slice(1, 5);
+    const leftPosts = latestPosts.slice(0, 2);
+    const rightPosts = latestPosts.slice(2, 6);
 
     return (
         <div className="arcade-news-wrapper">
             <div className="news-grid">
-                {/* 1. Noticia Destacada Principal (Púrpura Eléctrico) */}
-                {mainPost && (
-                    <Link 
-                        to={`/noticias/${mainPost.slug}`} 
-                        className="featured-news-card"
-                        onMouseEnter={() => setHoveredIndex(0)}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                        aria-label={`Abrir noticia principal: ${mainPost.title}`}
-                    >
-                        <div className="featured-news-img-box">
-                            <img src={getImageUrl(mainPost)} alt={mainPost.title} />
-                        </div>
-                        <div className="featured-news-content">
-                            <span className="arcade-news-tag tag-badge-yellow">
-                                {mainPost.category || 'DESTACADO'}
-                            </span>
-                            <h3 className="featured-news-title">{mainPost.title}</h3>
-                            <div className="news-meta-row" style={{ color: 'rgba(255,255,255,0.85)' }}>
-                                <span className="news-date-text">{formatDate(mainPost.published_at || mainPost.created_at)}</span>
-                                <span style={{ opacity: 0.4 }}>•</span>
-                                <span>por <span className="news-author-highlight" style={{ color: 'var(--yellow)' }}>{mainPost.author || 'EvilTokkii'}</span></span>
+                {/* 1. Columna Izquierda: 2 Noticias en Formato Horizontal Apiladas */}
+                <div className="news-left-column">
+                    {leftPosts.map((post, idx) => (
+                        <Link 
+                            key={post.id || post.slug} 
+                            to={`/noticias/${post.slug}`} 
+                            className={`horizontal-news-card ${idx === 0 ? 'card-left-primary' : 'card-left-secondary'}`}
+                            onMouseEnter={() => setHoveredIndex(idx)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                            aria-label={`Abrir noticia: ${post.title}`}
+                        >
+                            <div className="horizontal-news-img-box">
+                                <img src={getImageUrl(post)} alt={post.title} />
                             </div>
-                        </div>
-                    </Link>
-                )}
+                            <div className="horizontal-news-content">
+                                <div>
+                                    <span className={`arcade-news-tag ${idx === 0 ? 'tag-badge-yellow' : 'tag-badge-cyan'}`}>
+                                        {post.category || 'DESTACADO'}
+                                    </span>
+                                    <h3 className="horizontal-news-title">{post.title}</h3>
+                                </div>
+                                <div className="news-meta-row">
+                                    <span className="news-date-text">{formatDate(post.published_at || post.created_at)}</span>
+                                    <span style={{ opacity: 0.4 }}>•</span>
+                                    <span>por <span className="news-author-highlight" style={{ color: idx === 0 ? 'var(--yellow)' : 'var(--cyan)' }}>{post.author || 'EvilTokkii'}</span></span>
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
 
                 {/* 2. Grid de Noticias Secundarias (Multicolor 2x2) */}
                 <div className="news-side-grid">
-                    {sidePosts.map((post, idx) => {
-                        const originalIndex = idx + 1;
+                    {rightPosts.map((post, idx) => {
+                        const originalIndex = idx + 2;
                         const theme = SIDE_CARD_THEMES[idx % SIDE_CARD_THEMES.length];
                         return (
                             <Link 

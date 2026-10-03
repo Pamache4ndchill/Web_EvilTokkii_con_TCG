@@ -8,71 +8,95 @@
 
 .news-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 1.25rem;
   align-items: stretch;
 }
 
 /* --------------------------------------------------------------------------
-   Tarjeta Principal Destacada (Púrpura Sticker Eléctrico)
+   Columna Izquierda: 2 Tarjetas Horizontales Apiladas
    -------------------------------------------------------------------------- */
-.featured-news-card {
-  background: #6f26d9;
-  border: 4px solid #000000;
-  box-shadow: 8px 8px 0 #000000;
-  border-radius: 22px;
+.news-left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  height: 100%;
+}
+
+.horizontal-news-card {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  flex: 1;
+  border: 3.5px solid #000000;
+  box-shadow: 6px 6px 0 #000000;
+  border-radius: 18px;
   overflow: hidden;
   text-decoration: none;
   color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
   position: relative;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.featured-news-card:hover {
+.horizontal-news-card.card-left-primary {
+  background: #6f26d9;
+}
+
+.horizontal-news-card.card-left-secondary {
+  background: #20103a;
+}
+
+.horizontal-news-card:hover {
   transform: translate(2px, 2px);
-  box-shadow: 4px 4px 0 #000000;
+  box-shadow: 3px 3px 0 #000000;
 }
 
-.featured-news-img-box {
+.horizontal-news-img-box {
+  width: 44%;
+  min-width: 150px;
   position: relative;
-  aspect-ratio: 16/9;
-  overflow: hidden;
   background: #000000;
-  border-bottom: 3.5px solid #000000;
+  border-right: 3.5px solid #000000;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-.featured-news-img-box img {
+.horizontal-news-img-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.4s ease;
 }
 
-.featured-news-card:hover .featured-news-img-box img {
-  transform: scale(1.05);
+.horizontal-news-card:hover .horizontal-news-img-box img {
+  transform: scale(1.08);
 }
 
-.featured-news-content {
-  padding: 1.5rem;
+.horizontal-news-content {
+  padding: 1.1rem 1.25rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   flex-grow: 1;
+  min-width: 0;
 }
 
-.featured-news-title {
+.horizontal-news-title {
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 2.2vw, 2rem);
-  line-height: 1.2;
+  font-size: clamp(1rem, 1.35vw, 1.22rem);
+  line-height: 1.25;
   letter-spacing: -0.01em;
   color: #fff342;
-  margin: 0.85rem 0 0.75rem;
-  text-shadow: 2.5px 2.5px 0 #000000;
+  text-shadow: 2px 2px 0 #000000;
+  margin: 0.5rem 0 0.6rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.15s ease;
 }
 
-.featured-news-card:hover .featured-news-title {
+.horizontal-news-card:hover .horizontal-news-title {
   color: #ffffff;
 }
 
@@ -225,7 +249,17 @@
   }
 }
 
-@media (max-width: 580px) {
+@media (max-width: 640px) {
+  .horizontal-news-card {
+    flex-direction: column;
+  }
+  .horizontal-news-img-box {
+    width: 100%;
+    min-width: 100%;
+    aspect-ratio: 16/9;
+    border-right: none;
+    border-bottom: 3.5px solid #000000;
+  }
   .news-side-grid {
     grid-template-columns: 1fr;
   }
