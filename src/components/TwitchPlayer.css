@@ -1,0 +1,268 @@
+/* ==========================================================================
+   TWITCH PLAYER - ARCADE PURPLE STICKER THEME (EXACT MATCH TO REF)
+   ========================================================================== */
+
+.arcade-twitch-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.arcade-twitch-card {
+  background: linear-gradient(135deg, #873beb 0%, #6f26d9 100%);
+  border: 4px solid #180d2f;
+  box-shadow: 10px 10px 0 #180d2f;
+  border-radius: 26px;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.arcade-twitch-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+/* --------------------------------------------------------------------------
+   Lado Izquierdo: Información
+   -------------------------------------------------------------------------- */
+.arcade-twitch-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.arcade-twitch-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 2px solid #180d2f;
+  box-shadow: 3px 3px 0 #180d2f;
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+}
+
+.badge-online {
+  background: var(--yellow);
+  color: #180d2f;
+}
+
+.badge-online .status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #00cc66;
+  box-shadow: 0 0 8px #00cc66;
+  animation: twitch-pulse 1.4s infinite ease-in-out;
+}
+
+.badge-offline {
+  background: #180d2f;
+  color: var(--yellow);
+  border-color: #180d2f;
+}
+
+.badge-offline .status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--hot-pink);
+  box-shadow: 0 0 8px var(--hot-pink);
+}
+
+@keyframes twitch-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.6; }
+}
+
+.arcade-twitch-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-shadow: 3px 3px 0 #180d2f;
+  margin-bottom: 1.1rem;
+}
+
+.arcade-twitch-title .title-top-label {
+  display: block;
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.2rem;
+  text-shadow: 2px 2px 0 #180d2f;
+}
+
+.arcade-twitch-title .title-highlight-name {
+  color: var(--yellow);
+  text-shadow: 3px 3px 0 #180d2f;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.arcade-twitch-title .title-highlight-name .star-icon {
+  font-size: 0.75em;
+  color: var(--yellow);
+}
+
+.arcade-twitch-desc-box {
+  background: rgba(24, 13, 47, 0.6);
+  border: 2px solid #180d2f;
+  box-shadow: 3px 3px 0 #180d2f;
+  border-radius: 14px;
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.arcade-twitch-desc-box p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: #ffffff;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.arcade-twitch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: var(--yellow);
+  color: #180d2f !important;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  padding: 0.85rem 1.6rem;
+  border-radius: 14px;
+  border: 3px solid #180d2f;
+  box-shadow: 4px 4px 0 #180d2f;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.arcade-twitch-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #180d2f;
+  background: var(--hot-pink);
+  color: #ffffff !important;
+}
+
+.arcade-twitch-note {
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* --------------------------------------------------------------------------
+   Lado Derecho: Pantalla de Stream (Arcade Screen Frame)
+   -------------------------------------------------------------------------- */
+.arcade-screen-frame {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  background: #000000;
+  border: 3px solid #180d2f;
+  box-shadow: 6px 6px 0 #180d2f;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.arcade-offline-preview {
+  position: absolute;
+  inset: 0;
+  display: block;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.arcade-offline-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.arcade-offline-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(24, 13, 47, 0.2) 0%, rgba(24, 13, 47, 0.85) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  opacity: 0.9;
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.arcade-screen-frame:hover .arcade-offline-img {
+  transform: scale(1.04);
+}
+
+.arcade-screen-frame:hover .arcade-offline-overlay {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(24, 13, 47, 0.4) 0%, rgba(24, 13, 47, 0.92) 100%);
+}
+
+.arcade-play-badge {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: #180d2f;
+  border: 3px solid #180d2f;
+  box-shadow: 4px 4px 0 #180d2f;
+  display: grid;
+  place-items: center;
+  font-size: 1.4rem;
+  padding-left: 4px;
+  transition: transform 0.2s ease;
+}
+
+.arcade-screen-frame:hover .arcade-play-badge {
+  transform: scale(1.12);
+  background: var(--hot-pink);
+  color: #ffffff;
+}
+
+.arcade-offline-label {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  color: #ffffff;
+  letter-spacing: 0.06em;
+  text-shadow: 2px 2px 0 var(--ink);
+}
+
+.arcade-twitch-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Breakpoint
+   -------------------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .arcade-twitch-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+}

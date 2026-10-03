@@ -1,0 +1,112 @@
+/* ==========================================================================
+   FOOTER - ARCADE CYBER 2026 THEME (CLEAN ORIGINAL LAYOUT)
+   ========================================================================== */
+
+.arcade-footer {
+  background: #180d2f;
+  border-top: 4px solid #000000;
+  box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.5);
+  padding: 2.25rem 1.5rem 2rem;
+  margin-top: 3.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.arcade-footer-container {
+  max-width: 1050px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+/* Fila Principal Centrada */
+.arcade-footer-top-simple {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.arcade-footer-copy {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--yellow);
+  letter-spacing: 0.04em;
+}
+
+.arcade-footer-bullet {
+  color: rgba(233, 176, 255, 0.35);
+  font-weight: bold;
+}
+
+.arcade-footer-legal-link {
+  color: var(--cyan);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.88rem;
+  transition: color 0.15s ease, text-shadow 0.15s ease;
+}
+
+.arcade-footer-legal-link:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px var(--cyan);
+}
+
+/* Botones de Redes Sociales */
+.arcade-footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.arcade-footer-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  border: 2px solid #180d2f;
+  box-shadow: 2.5px 2.5px 0 #180d2f;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.arcade-footer-social-btn:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #180d2f;
+}
+
+.footer-btn-twitch { background: #9146ff; color: #ffffff !important; }
+.footer-btn-instagram { background: linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%); color: #ffffff !important; }
+.footer-btn-tiktok { background: #000000; color: #ffffff !important; border-color: var(--cyan); }
+.footer-btn-x { background: #180d2f; color: #ffffff !important; }
+.footer-btn-discord { background: #5865f2; color: #ffffff !important; }
+
+/* Descargo de Responsabilidad */
+.arcade-footer-bottom {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.arcade-footer-legal {
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+}
+
+.arcade-footer-legal strong {
+  color: rgba(255, 255, 255, 0.65);
+}

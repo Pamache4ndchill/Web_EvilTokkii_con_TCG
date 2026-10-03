@@ -1,0 +1,735 @@
+/* ==========================================================================
+   MINIJUEGOS PAGE - ARCADE CYBER 2026 THEME
+   ========================================================================== */
+
+.minijuegos-page {
+  min-height: 80vh;
+  padding: 2.5rem 0 80px;
+}
+
+/* --------------------------------------------------------------------------
+   Header Hero
+   -------------------------------------------------------------------------- */
+.minijuegos-hero {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+  margin: 0 auto 1.5rem !important;
+}
+
+.minijuegos-hero > div {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+.minijuegos-hero .section-tag-badge {
+  margin: 0 auto 0.75rem !important;
+  align-self: center !important;
+}
+
+.minijuegos-hero .section-title-arcade {
+  text-align: center !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+}
+
+.minijuegos-auth-warning {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #20103a;
+  border: 2.5px solid #000000;
+  box-shadow: 4px 4px 0 #000000;
+  border-radius: 999px;
+  padding: 0.65rem 1.6rem;
+  color: var(--yellow);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  margin: 0 auto 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Rejilla de Minijuegos (Game Tabs Grid)
+   -------------------------------------------------------------------------- */
+.game-tabs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.arcade-game-card {
+  background: #20103a;
+  border: 3.5px solid #000000;
+  box-shadow: 6px 6px 0 #000000;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  padding: 1.5rem 1.4rem;
+  min-height: 205px;
+  height: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  text-align: left;
+}
+
+.arcade-game-card:hover:not(.is-locked):not(.is-completed) {
+  transform: translate(2px, 2px);
+  box-shadow: 3px 3px 0 #000000;
+}
+
+.arcade-game-card.is-locked,
+.arcade-game-card.is-completed {
+  cursor: not-allowed;
+}
+
+/* Background Image */
+.arcade-game-card-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  opacity: 0.45;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.arcade-game-card-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.4) contrast(1.15);
+  transition: transform 0.4s ease;
+}
+
+.arcade-game-card:hover:not(.is-locked):not(.is-completed) .arcade-game-card-bg img {
+  transform: scale(1.08);
+}
+
+/* Lock / Completed Overlay */
+.arcade-game-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 6, 28, 0.88);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.arcade-game-card-badge {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: 1px;
+  padding: 0.55rem 1.4rem;
+  border-radius: 999px;
+  border: 2.5px solid #000000;
+  box-shadow: 3px 3px 0 #000000;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.arcade-game-card-badge.locked {
+  background: #180d2f;
+  color: var(--hot-pink);
+}
+
+.arcade-game-card-badge.completed {
+  background: #180d2f;
+  color: var(--cyan);
+}
+
+/* Card Content */
+.arcade-game-card-content {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
+.arcade-game-card-title {
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  color: var(--yellow);
+  text-shadow: 2px 2px 0 #000000;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.25;
+  min-height: 2.65rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.arcade-game-card-desc {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.45;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Master Cards & Sub Cards (Scoreboard, Stats, Quiz Panels)
+   -------------------------------------------------------------------------- */
+.arcade-master-card {
+  background: #20103a;
+  border: 4px solid #000000;
+  box-shadow: 8px 8px 0 #000000;
+  border-radius: 24px;
+}
+
+.arcade-sub-card {
+  background: #180d2f;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0 #000000;
+  border-radius: 16px;
+}
+
+.arcade-stat-card {
+  background: #20103a;
+  border: 3.5px solid #000000;
+  box-shadow: 6px 6px 0 #000000;
+  border-radius: 20px;
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.arcade-stat-title {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  color: var(--cyan);
+  text-transform: uppercase;
+}
+
+.arcade-stat-num {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--yellow);
+  text-shadow: 2px 2px 0 #000000;
+  line-height: 1.1;
+  margin: 0.3rem 0;
+}
+
+.arcade-stat-sub {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Ventana de Comenzar Desafío (Challenge Start Window) - Arcade 2026
+   -------------------------------------------------------------------------- */
+.arcade-back-btn {
+  background: var(--cyan);
+  color: #000000;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0 #000000;
+  border-radius: 12px;
+  padding: 0.6rem 1.4rem;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+}
+
+.arcade-back-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000000;
+}
+
+.quiz-start-card {
+  background: #20103a;
+  border: 3.5px solid #000000;
+  box-shadow: 8px 8px 0 #000000;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto 2.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-start-header {
+  padding: 2.75rem 2rem 2.25rem;
+  text-align: center;
+  border-bottom: 3.5px solid #000000;
+  background: #20103a;
+}
+
+.quiz-start-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #180d2f;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0 #000000;
+  border-radius: 999px;
+  padding: 6px 18px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--hot-pink);
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.quiz-start-badge .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--hot-pink);
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 6px var(--hot-pink);
+}
+
+.quiz-start-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 900;
+  color: var(--yellow);
+  text-shadow: 3px 3px 0 #000000;
+  margin: 0 0 1rem 0;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.quiz-start-desc {
+  margin: 0 auto;
+  max-width: 650px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.quiz-start-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #180d2f;
+  gap: 1.25rem;
+}
+
+.quiz-start-prompt {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 2px 2px 0 #000000;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+.quiz-start-rules {
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 580px;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.quiz-start-btn {
+  background: var(--hot-pink);
+  color: #ffffff;
+  border: 3.5px solid #000000;
+  box-shadow: 5px 5px 0 #000000;
+  border-radius: 14px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0 #000000;
+  padding: 0.9rem 2.75rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  letter-spacing: 0.5px;
+}
+
+.quiz-start-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000000;
+  background: #ff1ca8;
+}
+
+/* --------------------------------------------------------------------------
+   Casilla de Juego Activo (Active Quiz Modal) - Arcade 2026
+   -------------------------------------------------------------------------- */
+.quiz-active-card {
+  background: #20103a;
+  border: 3.5px solid #000000;
+  box-shadow: 10px 10px 0 #000000;
+  border-radius: 24px;
+  padding: 2.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 680px;
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+.quiz-active-card.covers-layout {
+  max-width: 880px;
+}
+
+.quiz-active-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 2.5px solid #000000;
+  padding-bottom: 1rem;
+}
+
+.quiz-counter-badge {
+  background: #180d2f;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0 #000000;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.quiz-timer-badge {
+  background: #180d2f;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0 #000000;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  color: var(--yellow);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.5px;
+}
+
+.quiz-timer-badge.urgent {
+  color: var(--hot-pink);
+  animation: pulse 0.8s infinite alternate;
+}
+
+.quiz-close-btn {
+  background: #180d2f;
+  color: var(--hot-pink);
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0 #000000;
+  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.quiz-close-btn:hover {
+  background: var(--hot-pink);
+  color: #ffffff;
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 #000000;
+}
+
+.quiz-media-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #180d2f;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0 #000000;
+  border-radius: 20px;
+  padding: 16px;
+  max-width: 100%;
+}
+
+.quiz-media-box-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0 #000000;
+  border-radius: 20px;
+  padding: 18px 24px;
+}
+
+.quiz-question-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+  font-weight: 900;
+  color: var(--yellow);
+  text-shadow: 2px 2px 0 #000000;
+  margin: 1.25rem 0 0.5rem 0;
+  text-align: center;
+  line-height: 1.35;
+}
+
+.quiz-options-grid {
+  display: grid;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.quiz-option-btn {
+  background: #180d2f;
+  color: #ffffff;
+  border: 2.5px solid #000000;
+  box-shadow: 4px 4px 0 #000000;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  font-size: 1.02rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  width: 100%;
+  user-select: none;
+}
+
+.quiz-option-btn:hover:not(:disabled) {
+  background: #28154e;
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 #000000;
+}
+
+.quiz-option-btn.selected {
+  background: #391c70;
+  border-color: var(--cyan);
+  box-shadow: 2px 2px 0 #000000;
+  transform: translate(2px, 2px);
+}
+
+.quiz-option-btn.correct {
+  background: #00d27f !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0 #000000 !important;
+}
+
+.quiz-option-btn.incorrect {
+  background: var(--hot-pink) !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  border: 2.5px solid #000000 !important;
+  box-shadow: 3px 3px 0 #000000 !important;
+  text-shadow: 1px 1px 0 #000000;
+}
+
+.quiz-option-btn.dimmed {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.quiz-option-letter {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.quiz-feedback-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  border-top: 2.5px solid #000000;
+  padding-top: 1.25rem;
+  margin-top: 0.5rem;
+  gap: 1rem;
+}
+
+.quiz-feedback-msg {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin: 0;
+  text-align: center;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+}
+
+.quiz-feedback-msg.correct {
+  color: #00d27f;
+  text-shadow: 1.5px 1.5px 0 #000000;
+}
+
+.quiz-feedback-msg.incorrect {
+  color: var(--hot-pink);
+  text-shadow: 1.5px 1.5px 0 #000000;
+}
+
+.quiz-next-btn {
+  background: var(--cyan);
+  color: #000000;
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0 #000000;
+  border-radius: 14px;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 0.85rem 2.25rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  letter-spacing: 0.5px;
+}
+
+.quiz-next-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #000000;
+}
+
+/* --------------------------------------------------------------------------
+   Casilla de Resultados del Quiz (Quiz Results Modal) - Arcade 2026
+   -------------------------------------------------------------------------- */
+.quiz-results-card {
+  background: #20103a;
+  border: 3.5px solid #000000;
+  box-shadow: 10px 10px 0 #000000;
+  border-radius: 24px;
+  padding: 2.75rem 2rem;
+  max-width: 550px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.quiz-results-title {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: var(--yellow);
+  text-shadow: 3px 3px 0 #000000;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.quiz-score-circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: #180d2f;
+  border: 4px solid #000000;
+  box-shadow: 4px 4px 0 #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-score-num {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--cyan);
+  text-shadow: 2px 2px 0 #000000;
+  line-height: 1;
+}
+
+.quiz-score-total {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 700;
+}
+
+.quiz-results-desc {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Diálogos de Confirmación y Racha (Arcade Modals)
+   -------------------------------------------------------------------------- */
+.arcade-dialog-card {
+  background: #20103a;
+  border: 3.5px solid #000000;
+  box-shadow: 8px 8px 0 #000000;
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.arcade-dialog-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .game-tabs-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,169 @@
+/* ==========================================================================
+   SOBRE PAGE - ARCADE CYBER 2026 THEME
+   ========================================================================== */
+
+.sobre-page {
+  width: 100%;
+  position: relative;
+  padding-bottom: 60px;
+}
+
+.sobre-section {
+  min-height: auto;
+  padding: 4rem 0;
+  position: relative;
+}
+
+.sobre-grid {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  flex-direction: row;
+  flex-wrap: wrap-reverse;
+}
+
+.sobre-grid.reverse {
+  flex-direction: row-reverse;
+}
+
+.sobre-col-text {
+  flex: 1.2;
+  min-width: 320px;
+}
+
+.sobre-col-img {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   Casilla de Redacción Arcade (Card)
+   -------------------------------------------------------------------------- */
+.sobre-card {
+  background: #20103a;
+  border: 3.5px solid #000000;
+  box-shadow: 6px 6px 0 #000000;
+  border-radius: 22px;
+  padding: 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.sobre-card p {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #ffffff;
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+
+.sobre-card-highlight {
+  font-family: var(--font-display);
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: var(--yellow);
+  text-shadow: 2px 2px 0 #000000;
+  margin-top: 0.5rem;
+  letter-spacing: 0.5px;
+  line-height: 1.45;
+  white-space: normal;
+}
+
+.sobre-highlight-single {
+  font-size: clamp(0.85rem, 1.8vw, 1.08rem);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Mod Chips / Badges
+   -------------------------------------------------------------------------- */
+.mod-badges-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.25rem 0;
+  width: 100%;
+}
+
+.mod-badges-row {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.45rem;
+  width: 100%;
+  align-items: center;
+}
+
+.mod-badges-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: 100%;
+  align-items: center;
+}
+
+.mod-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-family: var(--font-display);
+  font-size: clamp(0.66rem, 1vw, 0.75rem);
+  font-weight: 800;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0 #000000;
+  white-space: nowrap;
+}
+
+.mod-chip-chief {
+  background: var(--yellow);
+  color: #000000;
+}
+
+.mod-chip-sword,
+.mod-chip-purple {
+  background: #180d2f;
+  color: #ffffff;
+}
+
+.mod-chip-cyan {
+  background: var(--cyan);
+  color: #000000;
+}
+
+.mod-chip-pink {
+  background: var(--hot-pink);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Banner Agradecimiento Final
+   -------------------------------------------------------------------------- */
+.sobre-banner-love {
+  background: linear-gradient(135deg, #6f26d9 0%, #ff32b8 100%);
+  border: 3px solid #000000;
+  box-shadow: 4px 4px 0 #000000;
+  border-radius: 16px;
+  padding: 1.1rem 1.6rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--yellow);
+  text-shadow: 2px 2px 0 #000000;
+  text-align: center;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .sobre-card {
+    padding: 1.5rem;
+  }
+  .sobre-grid {
+    gap: 2rem;
+  }
+}
