@@ -1,62 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faGamepad, faCommentDots, faStar, faCrown } from '@fortawesome/free-solid-svg-icons';
 import './Home.css';
 import './Sobre.css';
 
-interface ImageConfig {
-    scale: number;
-    fadeTop: number;
-    fadeBottom: number;
-    fadeLeft: number;
-    fadeRight: number;
-}
-
-const DEFAULT_CONFIG: ImageConfig = {
-    scale: 1.0,
-    fadeTop: 0,
-    fadeBottom: 0,
-    fadeLeft: 0,
-    fadeRight: 0
-};
-
-const getMaskStyle = (cfg: ImageConfig): React.CSSProperties => {
-    const { fadeTop, fadeBottom, fadeLeft, fadeRight } = cfg;
-    if (!fadeTop && !fadeBottom && !fadeLeft && !fadeRight) {
-        return {};
-    }
-
-    const vertGrad = `linear-gradient(to bottom, ${fadeTop > 0 ? `transparent 0%, black ${fadeTop}%, ` : ''}black ${100 - fadeBottom}%, transparent 100%)`;
-    const horizGrad = `linear-gradient(to right, ${fadeLeft > 0 ? `transparent 0%, black ${fadeLeft}%, ` : ''}black ${100 - fadeRight}%, transparent 100%)`;
-
-    return {
-        maskImage: `${vertGrad}, ${horizGrad}`,
-        WebkitMaskImage: `${vertGrad}, ${horizGrad}`,
-        maskComposite: 'intersect' as const,
-        WebkitMaskComposite: 'source-in' as const
-    };
-};
-
 const Sobre: React.FC = () => {
-    const [cfg1] = useState<ImageConfig>(() => {
-        const saved = localStorage.getItem('sobre_img1_config');
-        return saved ? JSON.parse(saved) : DEFAULT_CONFIG;
-    });
-    const [cfg2] = useState<ImageConfig>(() => {
-        const saved = localStorage.getItem('sobre_img2_config');
-        return saved ? JSON.parse(saved) : DEFAULT_CONFIG;
-    });
-    const [cfg3] = useState<ImageConfig>(() => {
-        const saved = localStorage.getItem('sobre_img3_config');
-        return saved ? JSON.parse(saved) : DEFAULT_CONFIG;
-    });
-
     return (
         <div className="sobre-page fade-in">
             {/* 1. Sección Sobre EvilTokkii */}
             <section className="sobre-section">
                 <div className="wrap">
-                    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <div style={{ maxWidth: '1040px', margin: '0 auto' }}>
                         <div className="sobre-grid">
                             {/* Columna Texto */}
                             <div className="sobre-col-text">
@@ -85,19 +39,13 @@ const Sobre: React.FC = () => {
                             
                             {/* Columna Imagen */}
                             <div className="sobre-col-img">
-                                <img 
-                                    src="/Tokkoo_1.png" 
-                                    alt="EvilTokkii" 
-                                    style={{
-                                        ...getMaskStyle(cfg1),
-                                        width: '100%',
-                                        maxWidth: '440px',
-                                        height: 'auto',
-                                        objectFit: 'contain',
-                                        transform: `scale(${cfg1.scale})`,
-                                        transformOrigin: 'center'
-                                    }}
-                                />
+                                <div className="sobre-img-wrapper">
+                                    <img 
+                                        src="/Tokkoo_1.png" 
+                                        alt="EvilTokkii" 
+                                        className="sobre-img"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -107,7 +55,7 @@ const Sobre: React.FC = () => {
             {/* 2. Sección Moderadores */}
             <section className="sobre-section">
                 <div className="wrap">
-                    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <div style={{ maxWidth: '1040px', margin: '0 auto' }}>
                         <div className="sobre-grid reverse">
                             {/* Columna Texto */}
                             <div className="sobre-col-text">
@@ -159,19 +107,13 @@ const Sobre: React.FC = () => {
                             
                             {/* Columna Imagen */}
                             <div className="sobre-col-img">
-                                <img 
-                                    src="/Tokkoo_2.png" 
-                                    alt="Moderadores" 
-                                    style={{
-                                        ...getMaskStyle(cfg2),
-                                        width: '100%',
-                                        maxWidth: '440px',
-                                        height: 'auto',
-                                        objectFit: 'contain',
-                                        transform: `scale(${cfg2.scale})`,
-                                        transformOrigin: 'center'
-                                    }}
-                                />
+                                <div className="sobre-img-wrapper">
+                                    <img 
+                                        src="/Tokkoo_2.png" 
+                                        alt="Moderadores" 
+                                        className="sobre-img"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -181,7 +123,7 @@ const Sobre: React.FC = () => {
             {/* 3. Sección Agradecimiento */}
             <section className="sobre-section">
                 <div className="wrap">
-                    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <div style={{ maxWidth: '1040px', margin: '0 auto' }}>
                         <div className="sobre-grid">
                             {/* Columna Texto */}
                             <div className="sobre-col-text">
@@ -210,19 +152,13 @@ const Sobre: React.FC = () => {
 
                             {/* Columna Imagen */}
                             <div className="sobre-col-img">
-                                <img 
-                                    src="/Tokkoo_3.png" 
-                                    alt="Agradecimiento" 
-                                    style={{
-                                        ...getMaskStyle(cfg3),
-                                        width: '100%',
-                                        maxWidth: '440px',
-                                        height: 'auto',
-                                        objectFit: 'contain',
-                                        transform: `scale(${cfg3.scale})`,
-                                        transformOrigin: 'center'
-                                    }}
-                                />
+                                <div className="sobre-img-wrapper">
+                                    <img 
+                                        src="/Tokkoo_3.png" 
+                                        alt="Agradecimiento" 
+                                        className="sobre-img"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -233,3 +169,4 @@ const Sobre: React.FC = () => {
 };
 
 export default Sobre;
+
