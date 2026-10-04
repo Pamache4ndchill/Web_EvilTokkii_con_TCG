@@ -296,13 +296,12 @@ const Home: React.FC = () => {
 
                             {/* #1 Rank (Crown) */}
                             <div className="top3-podium-card podium-rank-1">
-                                <div className="podium-crown"><FontAwesomeIcon icon={faCrown} style={{ color: 'var(--yellow)' }} /></div>
                                 <div className="podium-avatar-wrapper">
+                                    <div className="podium-crown"><FontAwesomeIcon icon={faCrown} style={{ color: 'var(--yellow)' }} /></div>
                                     <img 
                                         src={top1?.avatar_url || 'https://pub-0bf9a87cec964ff49bfd058873c948c3.r2.dev/public/logo.png'} 
                                         alt={top1?.username || 'Top 1'} 
                                         className="podium-avatar"
-                                        style={{ width: '64px', height: '64px', borderColor: 'var(--yellow)' }}
                                     />
                                     <span className="podium-badge-rank rank-1">#1</span>
                                 </div>

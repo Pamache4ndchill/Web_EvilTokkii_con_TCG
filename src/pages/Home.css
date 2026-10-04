@@ -417,35 +417,38 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
-  margin-bottom: 2rem;
-  align-items: end;
+  margin-top: 1.5rem;
+  margin-bottom: 2.25rem;
+  align-items: stretch;
 }
 
 .top3-podium-card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   text-align: center;
-  padding: 1.4rem 1rem;
+  padding: 1.5rem 1rem 1.4rem;
+  min-height: 250px;
   border-radius: 20px;
   border: 3.5px solid #180d2f;
   box-shadow: 6px 6px 0 #180d2f;
   position: relative;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
 }
 
-.top3-podium-card:hover {
-  transform: translate(2px, 2px);
-  box-shadow: 3px 3px 0 #180d2f;
-}
-
-/* #1 Rank (Centro - Amarillo Neón / Oro) */
+/* #1 Rank (Centro - Lugar 1: Levemente más arriba) */
 .podium-rank-1 {
   background: linear-gradient(135deg, #fff342 0%, #facc15 100%);
   color: #180d2f;
   order: 2;
-  padding: 1.8rem 1rem 1.5rem;
+  transform: translateY(-20px);
   box-shadow: 8px 8px 0 #180d2f;
+}
+
+.podium-rank-1:hover {
+  transform: translateY(-22px) translate(2px, 2px);
+  box-shadow: 6px 6px 0 #180d2f;
 }
 
 .podium-rank-1 .podium-name {
@@ -464,11 +467,17 @@
   margin-top: 0.5rem;
 }
 
-/* #2 Rank (Izquierda - Cyan Neón) */
+/* #2 Rank (Izquierda - Lugar 2: Levemente más abajo que el 1) */
 .podium-rank-2 {
   background: linear-gradient(135deg, #4edff2 0%, #20bcd2 100%);
   color: #180d2f;
   order: 1;
+  transform: translateY(0px);
+}
+
+.podium-rank-2:hover {
+  transform: translateY(0px) translate(2px, 2px);
+  box-shadow: 4px 4px 0 #180d2f;
 }
 
 .podium-rank-2 .podium-name {
@@ -486,11 +495,17 @@
   margin-top: 0.4rem;
 }
 
-/* #3 Rank (Derecha - Magenta Neón) */
+/* #3 Rank (Derecha - Lugar 3: Levemente más abajo que el 2) */
 .podium-rank-3 {
   background: linear-gradient(135deg, #ff32b8 0%, #d81494 100%);
   color: #ffffff;
   order: 3;
+  transform: translateY(20px);
+}
+
+.podium-rank-3:hover {
+  transform: translateY(20px) translate(2px, 2px);
+  box-shadow: 4px 4px 0 #180d2f;
 }
 
 .podium-rank-3 .podium-name {
@@ -509,17 +524,28 @@
 }
 
 .podium-crown {
-  font-size: 1.8rem;
-  margin-bottom: 2px;
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.6rem;
   filter: drop-shadow(2px 2px 0 #180d2f);
+  z-index: 2;
 }
 
 .podium-avatar-wrapper {
   position: relative;
+  width: 84px;
+  height: 84px;
   margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .podium-avatar {
+  width: 84px;
+  height: 84px;
   border-radius: 50%;
   border: 3.5px solid #180d2f;
   box-shadow: 3px 3px 0 #180d2f;
