@@ -124,51 +124,98 @@ const Ayuda: React.FC = () => {
         setSubmitStatus(null);
 
         try {
-            let imageUrls: string[] = [];
+            const DISCORD_WEBHOOK_URL =
+                import.meta.env.VITE_DISCORD_WEBHOOK_REPORTES ||
+                'https://discord.com/api/webhooks/1556421430067859528/mN-cJA2h2bIEkLc_4CZ7TI1xwWz3N37sZx9twSaa3ASxzfIYepr2qYCb6yesXNUhSGT-';
 
-            // 1. Subir imágenes a R2 mediante la Edge Function 'clever-api'
+            const reportLabels: Record<string, string> = {
+                bug: '🐛 Bug / Error del Sistema',
+                sugerencia: '💡 Sugerencia / Idea',
+                cambio: '🔄 Cambio Propuesto',
+            };
+
+            const reportColors: Record<string, number> = {
+                bug: 0xff4b4b,        // Rojo
+                sugerencia: 0xf50b8c, // Rosa Hot Pink
+                cambio: 0xffaa00,     // Naranja / Oro
+            };
+
+            const userDisplayName =
+                username ||
+                user?.user_metadata?.name ||
+                user?.user_metadata?.full_name ||
+                user?.user_metadata?.user_name ||
+                'Usuario de Twitch';
+
+            const userAvatar =
+                user?.user_metadata?.avatar_url ||
+                user?.user_metadata?.picture ||
+                '';
+
+            const embed = {
+                title: `🚨 Nuevo Reporte: ${reportLabels[reportType] || reportType.toUpperCase()}`,
+                color: reportColors[reportType] || 0xf50b8c,
+                fields: [
+                    {
+                        name: '👤 Usuario de Twitch',
+                        value: `**${userDisplayName}**\n*(ID: \`${user.id}\`)*`,
+                        inline: true,
+                    },
+                    {
+                        name: '📌 Categoría',
+                        value: reportLabels[reportType] || reportType,
+                        inline: true,
+                    },
+                    {
+                        name: '📎 Capturas Adjuntas',
+                        value: selectedImages.length > 0 ? `📁 ${selectedImages.length} imagen(es) subida(s)` : 'Ninguna',
+                        inline: true,
+                    },
+                    {
+                        name: '📝 Descripción del Reporte',
+                        value: description.trim(),
+                        inline: false,
+                    },
+                ],
+                thumbnail: userAvatar ? { url: userAvatar } : undefined,
+                footer: {
+                    text: 'EvilTokkii Web • Centro de Ayuda & Reportes',
+                    icon_url: 'https://tcg.eviltokkii.online/cards/Icono.png',
+                },
+                timestamp: new Date().toISOString(),
+            };
+
+            const formData = new FormData();
+            formData.append(
+                'payload_json',
+                JSON.stringify({
+                    username: 'EvilTokkii Soporte Web',
+                    avatar_url: 'https://tcg.eviltokkii.online/cards/Icono.png',
+                    embeds: [embed],
+                })
+            );
+
+            // Adjuntar cada archivo de imagen seleccionado directamente a Discord
             if (selectedImages.length > 0) {
-                for (const image of selectedImages) {
-                    const { data, error: uploadErr } = await supabase.functions.invoke('clever-api', {
-                        body: { fileName: image.name, fileType: image.type }
-                    });
-
-                    if (uploadErr || !data) {
-                        throw new Error(uploadErr ? uploadErr.message : 'Error generando presigned URL');
-                    }
-
-                    const uploadRes = await fetch(data.presignedUrl, {
-                        method: 'PUT',
-                        body: image,
-                        headers: { 'Content-Type': image.type }
-                    });
-
-                    if (!uploadRes.ok) {
-                        throw new Error(`Mala conexión con R2: ${uploadRes.statusText}`);
-                    }
-
-                    imageUrls.push(data.finalPublicUrl);
-                }
+                selectedImages.forEach((file, index) => {
+                    formData.append(`files[${index}]`, file, file.name);
+                });
             }
 
-            // 2. Guardar reporte en Supabase con los URLs de R2 y el username
-            const { error } = await supabaseAuth
-                .from('user_reports')
-                .insert({
-                    user_id: user.id,
-                    username: username || user?.user_metadata?.name || user?.user_metadata?.full_name || user?.user_metadata?.user_name || 'Desconocido',
-                    report_type: reportType,
-                    description: description.trim(),
-                    images: imageUrls
-                });
+            const response = await fetch(DISCORD_WEBHOOK_URL, {
+                method: 'POST',
+                body: formData,
+            });
 
-            if (error) throw error;
+            if (!response.ok) {
+                throw new Error(`Error al enviar a Discord (HTTP ${response.status})`);
+            }
 
             setShowSuccessModal(true);
-            setSubmitStatus({ success: true, message: '¡Tu reporte ha sido enviado con éxito!' });
+            setSubmitStatus({ success: true, message: '¡Tu reporte ha sido enviado con éxito a nuestro equipo de soporte!' });
             setDescription('');
             setSelectedImages([]);
-            imagePreviews.forEach(url => URL.revokeObjectURL(url));
+            imagePreviews.forEach((url) => URL.revokeObjectURL(url));
             setImagePreviews([]);
         } catch (err: any) {
             setSubmitStatus({ success: false, message: 'Error al enviar reporte: ' + err.message });
