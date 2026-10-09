@@ -64,18 +64,18 @@ const Legal: React.FC = () => {
                 El sitio web <strong>EvilTokkii</strong> (en adelante, "la Plataforma") opera como un portal independiente de entretenimiento, noticias, actividades interactivas, trivias y difusión para la comunidad gaming. Al acceder o utilizar la Plataforma, aceptas expresamente cumplir con las condiciones estipuladas en este documento.
               </p>
 
-              <h3 className="legal-sub-title">1.1. Uso de Contenido de Terceros y Marcas Registradas</h3>
+              <h3 className="legal-sub-title">1.1. Uso de Contenido de Terceros, Marcas Registradas y Enlaces a Plataformas Oficiales</h3>
               <p>
-                La Plataforma hace referencia, muestra y utiliza nombres, logotipos, carátulas, imágenes promocionales, fragmentos audiovisuales y marcas registradas pertenecientes a diversas empresas de entretenimiento, distribuidores y desarrolladores de videojuegos (incluyendo, entre otros: Nintendo Co., Ltd., Sony Interactive Entertainment, Microsoft Corporation, Ubisoft, Activision Blizzard, Electronic Arts, Capcom, Bandai Namco, etc.).
+                La Plataforma hace referencia, muestra y utiliza nombres, logotipos, carátulas, imágenes promocionales, fragmentos audiovisuales y marcas registradas pertenecientes a diversas empresas de entretenimiento, distribuidoras, productoras de anime y desarrolladores de videojuegos (incluyendo, entre otros: Nintendo Co., Ltd., Sony Interactive Entertainment, Microsoft Corporation, Ubisoft, Activision Blizzard, Electronic Arts, Capcom, Bandai Namco, Toei Animation, MAPPA, Crunchyroll LLC, Netflix Inc., Amazon Digital Services LLC, The Walt Disney Company, Warner Bros. Discovery / Max, Anime Onegai, Paramount / Pluto TV, AMC Networks / HIDIVE, Valve Corporation, Epic Games, etc.).
               </p>
               
               <div className="legal-callout-card callout-cyan">
-                <strong>Declaración Expresa de No Afiliación:</strong> EvilTokkii es un proyecto fan-made independiente y <strong>NO posee ningún vínculo, patrocinio, afiliación, aprobación oficial ni licencia directa</strong> otorgada por ninguna de las marcas o empresas de videojuegos mencionadas. Todas las marcas registradas, nombres comercializados y contenidos protegidos son propiedad exclusiva de sus respectivos dueños.
+                <strong>Declaración Expresa de No Afiliación y Enlaces a Terceros:</strong> EvilTokkii es un proyecto fan-made independiente y <strong>NO posee ningún vínculo comercial, patrocinio, afiliación, aprobación oficial ni licencia directa</strong> otorgada por ninguna de las marcas, productoras, plataformas de streaming ni empresas de videojuegos mencionadas. Las secciones de recomendación de canales de streaming oficiales y tiendas digitales se proveen exclusivamente como una guía informativa y de redirección segura a servicios legales autorizados. Todas las marcas registradas, nombres comerciales, logos y contenidos protegidos son propiedad exclusiva de sus respectivos titulares.
               </div>
 
               <h3 className="legal-sub-title">1.2. Doctrina de Uso Justo (Fair Use Disclaimer)</h3>
               <p>
-                El material visual y promocional desplegado en nuestras trivias, minijuegos y artículos informativos (tales como portadas sin logos, siluetas, marcas corporativas o fragmentos de sonido) tiene como <strong>único propósito</strong> la transformación con fines educativos, informativos, de trivia temática, crítica y entretenimiento interactivo comunitario. Dicho uso se ampara bajo los principios universales de <strong>Fair Use (Uso Justo)</strong> estipulados en la legislación internacional y la Sección 107 del Acto de Derechos de Autor (Copyright Act).
+                El material visual, logotipos y referencias promocionales desplegados en nuestras recomendaciones, trivias, minijuegos y artículos informativos (tales como portadas, logotipos identificatorios de plataformas oficiales, siluetas, marcas corporativas o fragmentos audiovisuales) tienen como <strong>único propósito</strong> la transformación con fines informativos, educativos, de recomendación legal al consumidor, crítica y entretenimiento comunitario. Dicho uso se ampara bajo los principios universales de <strong>Fair Use (Uso Justo)</strong> estipulados en la legislación internacional y la Sección 107 del Acto de Derechos de Autor (Copyright Act).
               </p>
 
               <h3 className="legal-sub-title">1.3. Limitación de Responsabilidad</h3>

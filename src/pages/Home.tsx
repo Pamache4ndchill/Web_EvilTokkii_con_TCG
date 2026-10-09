@@ -4,13 +4,76 @@ import NewsWidget from '../components/NewsWidget';
 import TwitchPlayer from '../components/TwitchPlayer';
 import MostStreamed from '../components/MostStreamed';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTwitch, faInstagram, faTiktok, faXTwitter, faDiscord, faSteam, faPlaystation, faXbox, faBattleNet, faItchIo } from '@fortawesome/free-brands-svg-icons';
-import { faGamepad, faTrophy, faCrown, faArrowRight, faBolt, faStar, faStore, faArrowUpRightFromSquare, faBagShopping } from '@fortawesome/free-solid-svg-icons';
+import { faTwitch, faInstagram, faTiktok, faXTwitter, faDiscord } from '@fortawesome/free-brands-svg-icons';
+import { faGamepad, faTrophy, faCrown, faArrowRight, faBolt, faStar, faStore, faArrowUpRightFromSquare, faBagShopping, faFilm } from '@fortawesome/free-solid-svg-icons';
 import { supabaseMinigames } from '../lib/supabase';
 import { checkAndRotateMonthlyLeaderboard } from '../utils/monthlyRotation';
 import { renderBadge } from '../components/UserRoleBadge';
 import './Home.Socials.css';
 import './Home.css';
+
+const STREAMING_PLATFORMS = [
+    {
+        id: 'crunchyroll',
+        name: 'Crunchyroll',
+        tag: 'Anime & Manga Oficial',
+        desc: 'Líder mundial de streaming de anime con simulcasts directos de Japón, doblaje latino y catálogo de manga.',
+        url: 'https://www.crunchyroll.com/',
+        logoUrl: '/logos/streaming/Crunchyroll.jpg',
+        color: '#f47521',
+        borderColor: '#f47521'
+    },
+    {
+        id: 'netflix',
+        name: 'Netflix',
+        tag: 'Anime, Películas & Series',
+        desc: 'Producciones originales de anime, series internacionales aclamadas, películas de estreno y animación global.',
+        url: 'https://www.netflix.com/',
+        logoUrl: '/logos/streaming/Netflix.jpg',
+        color: '#e50914',
+        borderColor: '#e50914'
+    },
+    {
+        id: 'primevideo',
+        name: 'Prime Video',
+        tag: 'Cine, Series & Anime',
+        desc: 'Películas taquilleras, producciones Amazon Originals y películas y series de anime destacadas.',
+        url: 'https://www.primevideo.com/',
+        logoUrl: '/logos/streaming/PrimeVideo.jpg',
+        color: '#00a8e1',
+        borderColor: '#00a8e1'
+    },
+    {
+        id: 'disneyplus',
+        name: 'Disney+',
+        tag: 'Disney, Marvel & Anime',
+        desc: 'Catálogo de Disney, Pixar, Marvel, Star Wars y estrenos mundiales exclusivos de anime (Bleach TYBW, etc.).',
+        url: 'https://www.disneyplus.com/',
+        logoUrl: '/logos/streaming/DisneyPlus.jpg',
+        color: '#113ccf',
+        borderColor: '#113ccf'
+    },
+    {
+        id: 'max',
+        name: 'Max',
+        tag: 'HBO, Warner & Animación',
+        desc: 'Cine de Warner Bros, series de HBO, películas de Studio Ghibli, DC Universe y animación de Adult Swim.',
+        url: 'https://www.max.com/',
+        logoUrl: '/logos/streaming/Max.jpg',
+        color: '#002be7',
+        borderColor: '#002be7'
+    },
+    {
+        id: 'plutotv',
+        name: 'Pluto TV',
+        tag: 'Streaming 100% Gratis',
+        desc: 'Televisión y streaming online gratuito y legal con canales temáticos 24/7 de anime, cine retro y series.',
+        url: 'https://pluto.tv/',
+        logoUrl: '/logos/streaming/Plutotv.jpg',
+        color: '#ffff00',
+        borderColor: '#ffff00'
+    }
+];
 
 const OFFICIAL_STORES = [
     {
@@ -19,7 +82,7 @@ const OFFICIAL_STORES = [
         tag: 'PC & Steam Deck',
         desc: 'La plataforma líder de distribución digital para PC, con ofertas de temporada y comunidad.',
         url: 'https://store.steampowered.com/',
-        icon: faSteam,
+        logoUrl: '/logos/Steam.jpg',
         color: '#1a9fff',
         borderColor: '#1a9fff'
     },
@@ -29,11 +92,7 @@ const OFFICIAL_STORES = [
         tag: 'PC & Juegos Gratis',
         desc: 'Juegos gratuitos cada semana, lanzamientos exclusivos y catálogo digital para PC y Mac.',
         url: 'https://store.epicgames.com/',
-        customIcon: (
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                <path d="M12 0L1.75 6.1v11.8L12 24l10.25-6.1V6.1L12 0zm0 2.3l8.25 4.9v9.6L12 21.7 3.75 16.8V7.2L12 2.3zm-1 4.7v5.5h2V7h-2zm0 7.5v2.5h2v-2.5h-2z" />
-            </svg>
-        ),
+        logoUrl: '/logos/Epic.jpg',
         color: '#0078f2',
         borderColor: '#0078f2'
     },
@@ -43,7 +102,7 @@ const OFFICIAL_STORES = [
         tag: 'PS5 & PS4',
         desc: 'Catálogo oficial de PlayStation para PS5 y PS4, expansiones y suscripciones PlayStation Plus.',
         url: 'https://store.playstation.com/',
-        icon: faPlaystation,
+        logoUrl: '/logos/Playstation.jpg',
         color: '#0070d1',
         borderColor: '#0070d1'
     },
@@ -53,7 +112,7 @@ const OFFICIAL_STORES = [
         tag: 'Xbox Series & PC',
         desc: 'Tienda oficial de Microsoft, cientos de juegos con Game Pass y compatibilidad en la nube.',
         url: 'https://www.xbox.com/games/store',
-        icon: faXbox,
+        logoUrl: '/logos/Xbox.jpg',
         color: '#107c10',
         borderColor: '#107c10'
     },
@@ -63,11 +122,7 @@ const OFFICIAL_STORES = [
         tag: 'Nintendo Switch',
         desc: 'Tienda digital oficial para adquirir y descargar juegos exclusivos y DLCs de Nintendo Switch.',
         url: 'https://www.nintendo.com/store/games/',
-        customIcon: (
-            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                <path d="M0 2v20h24V2H0zM9 19a4 4 0 0 1-4-4V9a4 4 0 0 1 4-4h1v14H9zm5 0V5h1a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-1zM6.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm11 7a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-            </svg>
-        ),
+        logoUrl: '/logos/Nintendo.jpg',
         color: '#e60012',
         borderColor: '#e60012'
     },
@@ -77,29 +132,9 @@ const OFFICIAL_STORES = [
         tag: 'Overwatch & Blizzard',
         desc: 'Tienda oficial de Blizzard para Overwatch 2, Diablo, World of Warcraft y Call of Duty.',
         url: 'https://shop.battle.net/',
-        icon: faBattleNet,
+        logoUrl: '/logos/Battle.net.jpg',
         color: '#00aeff',
         borderColor: '#00aeff'
-    },
-    {
-        id: 'gog',
-        name: 'GOG.com',
-        tag: '100% Sin DRM',
-        desc: 'Plataforma oficial de CD Projekt RED con juegos clásicos y modernos libres de DRM.',
-        url: 'https://www.gog.com/',
-        icon: faGamepad,
-        color: '#9b30ff',
-        borderColor: '#9b30ff'
-    },
-    {
-        id: 'itchio',
-        name: 'Itch.io',
-        tag: 'Juegos Indie & Creadores',
-        desc: 'El mercado independiente líder para descubrir videojuegos indie, prototipos y apoyar creadores.',
-        url: 'https://itch.io/',
-        icon: faItchIo,
-        color: '#fa5c5c',
-        borderColor: '#fa5c5c'
     }
 ];
 
@@ -380,12 +415,60 @@ const Home: React.FC = () => {
                 </div>
             </section>
 
-            {/* 6. Lo Más Streameado */}
+            {/* 6. Plataformas Oficiales de Streaming (Anime, Películas y Series) */}
             <section className="arcade-section">
                 <div className="wrap">
                     <div className="section-head-arcade">
                         <div>
-                            <div className="section-tag-badge"><span>04</span> CATÁLOGO DE JUEGOS</div>
+                            <div className="section-tag-badge"><span>04</span> STREAMING & CINE</div>
+                            <h2 className="section-title-arcade">CANALES OFICIALES DE STREAMING</h2>
+                            <p style={{ color: 'var(--muted)', marginTop: '0.5rem', maxWidth: '680px' }}>
+                                Disfruta de tus animes, películas y series favoritas de forma 100% legal en las principales plataformas oficiales y apoya a la industria de la animación y el cine.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="streaming-arcade-grid">
+                        {STREAMING_PLATFORMS.map((platform) => (
+                            <div 
+                                key={platform.id} 
+                                className="streaming-card-arcade" 
+                                style={{ '--store-hover-border': platform.borderColor } as React.CSSProperties}
+                            >
+                                <div className="streaming-card-main">
+                                    <div className="streaming-icon-box" style={{ background: platform.color }}>
+                                        <img 
+                                            src={platform.logoUrl} 
+                                            alt={`${platform.name} Logo`} 
+                                            className="streaming-icon-img"
+                                        />
+                                    </div>
+                                    <div className="streaming-card-content-col">
+                                        <span className="store-tag-pill">{platform.tag}</span>
+                                        <h3 className="streaming-card-title">{platform.name}</h3>
+                                        <p className="streaming-card-desc">{platform.desc}</p>
+                                    </div>
+                                </div>
+                                <a 
+                                    href={platform.url} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="store-card-btn"
+                                >
+                                    <FontAwesomeIcon icon={faFilm} /> VER CATÁLOGO <FontAwesomeIcon icon={faArrowUpRightFromSquare} style={{ fontSize: '0.72rem' }} />
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* 7. Lo Más Streameado */}
+            <section className="arcade-section">
+                <div className="wrap">
+                    <div className="section-head-arcade">
+                        <div>
+                            <div className="section-tag-badge"><span>05</span> CATÁLOGO DE JUEGOS</div>
                             <h2 className="section-title-arcade">LO STREMEADO ÚLTIMAMENTE</h2>
                         </div>
                     </div>
@@ -393,12 +476,12 @@ const Home: React.FC = () => {
                 </div>
             </section>
 
-            {/* 7. Tiendas Oficiales de Videojuegos */}
+            {/* 8. Tiendas Oficiales de Videojuegos */}
             <section className="arcade-section">
                 <div className="wrap">
                     <div className="section-head-arcade">
                         <div>
-                            <div className="section-tag-badge"><span>05</span> PLATAFORMAS & STORES</div>
+                            <div className="section-tag-badge"><span>06</span> PLATAFORMAS & STORES</div>
                             <h2 className="section-title-arcade">TIENDAS OFICIALES DE VIDEOJUEGOS</h2>
                             <p style={{ color: 'var(--muted)', marginTop: '0.5rem', maxWidth: '650px' }}>
                                 Adquiere tus videojuegos favoritos en sus tiendas y distribuidores oficiales de forma 100% segura y apoya a sus creadores.
@@ -406,22 +489,22 @@ const Home: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="stores-arcade-grid">
+                    <div className="streaming-arcade-grid">
                         {OFFICIAL_STORES.map((store) => (
                             <div 
                                 key={store.id} 
-                                className="store-card-arcade" 
+                                className="streaming-card-arcade" 
                                 style={{ '--store-hover-border': store.borderColor } as React.CSSProperties}
                             >
-                                <div>
-                                    <div className="store-card-top">
-                                        <div className="store-icon-box" style={{ background: store.color }}>
-                                            {store.customIcon ? store.customIcon : store.icon ? <FontAwesomeIcon icon={store.icon} /> : <FontAwesomeIcon icon={faStore} />}
-                                        </div>
-                                        <span className="store-tag-pill">{store.tag}</span>
+                                <div className="streaming-card-main">
+                                    <div className="streaming-icon-box" style={{ background: store.color }}>
+                                        <img src={store.logoUrl} alt={store.name} className="streaming-icon-img" />
                                     </div>
-                                    <h3 className="store-card-title">{store.name}</h3>
-                                    <p className="store-card-desc">{store.desc}</p>
+                                    <div className="streaming-card-content-col">
+                                        <span className="store-tag-pill">{store.tag}</span>
+                                        <h3 className="streaming-card-title">{store.name}</h3>
+                                        <p className="streaming-card-desc">{store.desc}</p>
+                                    </div>
                                 </div>
                                 <a 
                                     href={store.url} 
@@ -437,12 +520,12 @@ const Home: React.FC = () => {
                 </div>
             </section>
 
-            {/* 8. Redes Sociales & Comunidad */}
+            {/* 9. Redes Sociales & Comunidad */}
             <section className="arcade-section">
                 <div className="wrap">
                     <div className="section-head-arcade">
                         <div>
-                            <div className="section-tag-badge"><span>06</span> COMUNIDAD</div>
+                            <div className="section-tag-badge"><span>07</span> COMUNIDAD</div>
                             <h2 className="section-title-arcade">ÚNETE A NUESTRAS REDES</h2>
                             <p style={{ color: 'var(--muted)', marginTop: '0.5rem', maxWidth: '600px' }}>
                                 Sígueme para no perderte ningún directo, sorteo o actualización. ¡Te esperamos!
