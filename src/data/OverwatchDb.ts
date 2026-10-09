@@ -89,6 +89,14 @@ export const OVERWATCH_CHARACTERS: Character[] = [
     "imgUrl": "/Overwatch/Domina.png"
   },
   {
+    "id": "doctrine",
+    "name": "Doctrine",
+    "element": "Damage",
+    "weapon": "Talon",
+    "rarity": 5,
+    "imgUrl": "/Overwatch/Doctrine.png"
+  },
+  {
     "id": "doomfist",
     "name": "Doomfist",
     "element": "Tank",
