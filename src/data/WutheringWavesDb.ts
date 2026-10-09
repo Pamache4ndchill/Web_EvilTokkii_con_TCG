@@ -25,6 +25,14 @@ export const WUTHERING_WAVES_CHARACTERS: Character[] = [
     "imgUrl": "/Wuwa/aemeath.png"
   },
   {
+    "id": "augusta",
+    "name": "Augusta",
+    "element": "Electro",
+    "weapon": "Broadblade",
+    "rarity": 5,
+    "imgUrl": "/Wuwa/Augusta.png"
+  },
+  {
     "id": "baizhi",
     "name": "Baizhi",
     "element": "Glacio",
@@ -47,6 +55,14 @@ export const WUTHERING_WAVES_CHARACTERS: Character[] = [
     "weapon": "Broadblade",
     "rarity": 5,
     "imgUrl": "/Wuwa/buling.png"
+  },
+  {
+    "id": "calcharo",
+    "name": "Calcharo",
+    "element": "Electro",
+    "weapon": "Broadblade",
+    "rarity": 5,
+    "imgUrl": "/Wuwa/Calcharo.png"
   },
   {
     "id": "camellya",
@@ -105,6 +121,14 @@ export const WUTHERING_WAVES_CHARACTERS: Character[] = [
     "imgUrl": "/Wuwa/chixia.png"
   },
   {
+    "id": "ciaccona",
+    "name": "Ciaccona",
+    "element": "Aero",
+    "weapon": "Pistols",
+    "rarity": 4,
+    "imgUrl": "/Wuwa/Ciaccona.png"
+  },
+  {
     "id": "danjin",
     "name": "Danjin",
     "element": "Havoc",
@@ -119,6 +143,14 @@ export const WUTHERING_WAVES_CHARACTERS: Character[] = [
     "weapon": "Rectifier",
     "rarity": 5,
     "imgUrl": "/Wuwa/denia.png"
+  },
+  {
+    "id": "encore",
+    "name": "Encore",
+    "element": "Fusion",
+    "weapon": "Rectifier",
+    "rarity": 5,
+    "imgUrl": "/Wuwa/Encore.png"
   },
   {
     "id": "galbrena",
@@ -137,6 +169,14 @@ export const WUTHERING_WAVES_CHARACTERS: Character[] = [
     "imgUrl": "/Wuwa/hiyuki.png"
   },
   {
+    "id": "hsin",
+    "name": "Hsin",
+    "element": "Electro",
+    "weapon": "Gauntlets",
+    "rarity": 4,
+    "imgUrl": "/Wuwa/Hsin.png"
+  },
+  {
     "id": "iuno",
     "name": "Iuno",
     "element": "Aero",
@@ -151,6 +191,14 @@ export const WUTHERING_WAVES_CHARACTERS: Character[] = [
     "weapon": "Gauntlets",
     "rarity": 5,
     "imgUrl": "/Wuwa/jianxin.png"
+  },
+  {
+    "id": "jingran",
+    "name": "Jingran",
+    "element": "Fusion",
+    "weapon": "Sword",
+    "rarity": 4,
+    "imgUrl": "/Wuwa/Jingran.png"
   },
   {
     "id": "jinhsi",
@@ -257,6 +305,14 @@ export const WUTHERING_WAVES_CHARACTERS: Character[] = [
     "imgUrl": "/Wuwa/phrolova.png"
   },
   {
+    "id": "qingxiao",
+    "name": "Qingxiao",
+    "element": "Aero",
+    "weapon": "Broadblade",
+    "rarity": 5,
+    "imgUrl": "/Wuwa/Qingxiao.png"
+  },
+  {
     "id": "qiuyuan",
     "name": "Qiuyuan",
     "element": "Spectro",
@@ -337,12 +393,28 @@ export const WUTHERING_WAVES_CHARACTERS: Character[] = [
     "imgUrl": "/Wuwa/suisui.png"
   },
   {
+    "id": "suoming",
+    "name": "Suoming",
+    "element": "Electro",
+    "weapon": "Sword",
+    "rarity": 4,
+    "imgUrl": "/Wuwa/Suoming.png"
+  },
+  {
     "id": "taoqi",
     "name": "Taoqi",
     "element": "Havoc",
     "weapon": "Broadblade",
     "rarity": 4,
     "imgUrl": "/Wuwa/taoqi.png"
+  },
+  {
+    "id": "verina",
+    "name": "Verina",
+    "element": "Spectro",
+    "weapon": "Rectifier",
+    "rarity": 5,
+    "imgUrl": "/Wuwa/Verina.png"
   },
   {
     "id": "xiangli_yao",
@@ -367,6 +439,14 @@ export const WUTHERING_WAVES_CHARACTERS: Character[] = [
     "weapon": "Sword",
     "rarity": 5,
     "imgUrl": "/Wuwa/yangyang_xuanling.png"
+  },
+  {
+    "id": "yinlin",
+    "name": "Yinlin",
+    "element": "Electro",
+    "weapon": "Rectifier",
+    "rarity": 5,
+    "imgUrl": "/Wuwa/Yinlin.png"
   },
   {
     "id": "youhu",

@@ -833,6 +833,22 @@ export const GENSHIN_CHARACTERS: Character[] = [
     "imgUrl": "/Genshin/venti.png"
   },
   {
+    "id": "vesna",
+    "name": "Vesna",
+    "element": "Anemo",
+    "weapon": "Sword",
+    "rarity": 5,
+    "imgUrl": "/Genshin/Vesna.png"
+  },
+  {
+    "id": "vodyanitsa",
+    "name": "Vodyanitsa",
+    "element": "Hydro",
+    "weapon": "Catalyst",
+    "rarity": 5,
+    "imgUrl": "/Genshin/Vodyanitsa.png"
+  },
+  {
     "id": "wanderer",
     "name": "Wanderer",
     "element": "Anemo",
