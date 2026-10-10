@@ -81,6 +81,45 @@ export function transformWordPressPost(post: any): WPNewsItem {
     featuredImage = media?.source_url || media?.media_details?.sizes?.large?.source_url || media?.media_details?.sizes?.full?.source_url || '';
   }
 
+  if (!featuredImage && post?.jetpack_featured_media_url) {
+    featuredImage = post.jetpack_featured_media_url;
+  }
+
+  let finalContent = post?.content?.rendered || '';
+
+  // Fallback: si la noticia no tiene imagen destacada en los metadatos de WordPress,
+  // extraer la imagen del desarrollo/cuerpo de la noticia
+  if (!featuredImage && finalContent) {
+    const origMatch = finalContent.match(/<img[^>]+data-orig-file=["']([^"']+)["']/i);
+    const largeMatch = finalContent.match(/<img[^>]+data-large-file=["']([^"']+)["']/i);
+    const srcMatch = finalContent.match(/<img[^>]+src=["']([^"']+)["']/i);
+
+    if (origMatch?.[1]) {
+      featuredImage = decodeHtmlEntities(origMatch[1]);
+    } else if (largeMatch?.[1]) {
+      featuredImage = decodeHtmlEntities(largeMatch[1]);
+    } else if (srcMatch?.[1]) {
+      featuredImage = decodeHtmlEntities(srcMatch[1]);
+    }
+
+    // Al promover la imagen del cuerpo a cabecera, la limpiamos del desarrollo para que no aparezca duplicada
+    if (featuredImage) {
+      finalContent = finalContent
+        .replace(/<br\s*\/?>\s*<a\b[^>]*>\s*<img\b[^>]*>\s*<\/a>/gi, '')
+        .replace(/<a\b[^>]*>\s*<img\b[^>]*>\s*<\/a>/gi, '')
+        .replace(/<figure\b[^>]*>[\s\S]*?<img\b[^>]*>[\s\S]*?<\/figure>/gi, '')
+        .replace(/<p>\s*<img\b[^>]*>\s*<\/p>/gi, '')
+        .replace(/<img\b[^>]*>/gi, '')
+        .replace(/<p>\s*(?:<br\s*\/?>)?\s*<\/p>/gi, '')
+        .trim();
+    }
+  }
+
+  // Asegurar protocolo HTTPS
+  if (featuredImage && featuredImage.startsWith('http://')) {
+    featuredImage = featuredImage.replace('http://', 'https://');
+  }
+
   // 3. Extraer Autor
   let authorName = 'EvilTokkii';
   if (post?._embedded?.['author']?.[0]?.name) {
@@ -120,7 +159,7 @@ export function transformWordPressPost(post: any): WPNewsItem {
     id: post.id,
     title: decodedTitle,
     subtitle: cleanExcerpt,
-    content: post?.content?.rendered || '',
+    content: finalContent || post?.content?.rendered || '',
     header_image: featuredImage || `${import.meta.env.VITE_R2_BASE_URL || ''}/logo.png`,
     slug: post.slug || String(post.id),
     author: authorName,
