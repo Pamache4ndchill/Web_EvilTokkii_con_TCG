@@ -302,18 +302,20 @@ const EventoDetalle: React.FC = () => {
 
                     {/* Fila 3: Botón de Participar */}
                     {evento.estado === 'activo' ? (
-                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5rem' }}>
-                            <button
-                                onClick={() => setShowForm(true)}
-                                className="btn-arcade-primary"
-                                style={{
-                                    padding: '1rem 3rem',
-                                    fontSize: '1.15rem'
-                                }}
-                            >
-                                <FontAwesomeIcon icon={faUserPlus} /> PARTICIPAR AHORA
-                            </button>
-                        </div>
+                        evento.requiere_participacion !== false ? (
+                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5rem' }}>
+                                <button
+                                    onClick={() => setShowForm(true)}
+                                    className="btn-arcade-primary"
+                                    style={{
+                                        padding: '1rem 3rem',
+                                        fontSize: '1.15rem'
+                                    }}
+                                >
+                                    <FontAwesomeIcon icon={faUserPlus} /> PARTICIPAR AHORA
+                                </button>
+                            </div>
+                        ) : null
                     ) : (
                         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5rem' }}>
                             <div className="dinamica-badge-finalizado" style={{ fontSize: '0.95rem', padding: '0.75rem 2rem' }}>
@@ -325,8 +327,8 @@ const EventoDetalle: React.FC = () => {
 
                 {showForm && (
                     <ParticipationForm
-                        tipo="evento"
-                        itemId={slug || ""}
+                        tipo={evento.tipo === 'sorteo' ? 'sorteo' : 'evento'}
+                        itemId={evento.id || slug || ""}
                         itemTitle={evento.titulo}
                         onClose={() => setShowForm(false)}
                     />

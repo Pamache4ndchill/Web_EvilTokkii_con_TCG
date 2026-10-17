@@ -38,24 +38,25 @@ const DinamicaCardVertical: React.FC<{ item: any, style?: React.CSSProperties }>
                     <p className="dinamica-card-desc">{item.descripcion || ''}</p>
                 </div>
                 <div className="dinamica-card-footer">
-                    <div>
+                    <div style={{ minWidth: 0, overflow: 'hidden' }}>
                         <span className="dinamica-date-label">FECHA</span>
-                        <span className="dinamica-date-val">{item.fecha}</span>
+                        <span className="dinamica-date-val" style={{ display: 'block', wordBreak: 'break-word' }}>{item.fecha}</span>
                     </div>
                     {isFinalizado ? (
-                        <span className="dinamica-badge-finalizado">
+                        <span className="dinamica-badge-finalizado" style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
                             FINALIZADO
                         </span>
                     ) : item.slug ? (
                         <Link
                             to={`/dinamicas/${item.slug}`}
                             className="dinamica-btn-action"
+                            style={{ whiteSpace: 'nowrap', flexShrink: 0 }}
                             aria-label={`Ver detalles de ${item.titulo}`}
                         >
                             MÁS INFO <FontAwesomeIcon icon={faArrowRight} style={{ fontSize: '0.75rem' }} />
                         </Link>
                     ) : (
-                        <span className="dinamica-btn-action" style={{ background: 'var(--hot-pink)', color: '#ffffff' }}>
+                        <span className="dinamica-btn-action" style={{ background: 'var(--hot-pink)', color: '#ffffff', whiteSpace: 'nowrap', flexShrink: 0 }}>
                             ¡PREPÁRATE!
                         </span>
                     )}
