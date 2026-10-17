@@ -206,6 +206,22 @@ const Dinamicas: React.FC = () => {
         };
 
         fetchItems();
+
+        // Suscripción Realtime: al crear, editar o eliminar en el Builder, se actualiza al instante en la web
+        const channel = supabase
+            .channel('dinamicas-page-realtime')
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'content_items' },
+                () => {
+                    fetchItems();
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
     }, []);
 
     const parseFecha = (fechaStr: string, createdAtStr: string) => {
@@ -264,18 +280,24 @@ const Dinamicas: React.FC = () => {
         return new Date(createdAtStr || 0);
     };
 
+    const isTerminado = (i: any) => {
+        if (i.estado === 'terminado' || i.estado === 'finalizado') return true;
+        if (i.fecha_fin && new Date(i.fecha_fin).getTime() <= Date.now()) return true;
+        return false;
+    };
+
     const eventosActivos = items
-        .filter(i => i.tipo === 'evento' && i.estado === 'activo')
+        .filter(i => i.tipo === 'evento' && i.estado === 'activo' && !isTerminado(i))
         .sort((a, b) => parseFecha(a.fecha, a.created_at).getTime() - parseFecha(b.fecha, b.created_at).getTime());
     const sorteosActivos = items
-        .filter(i => i.tipo === 'sorteo' && i.estado === 'activo')
+        .filter(i => i.tipo === 'sorteo' && i.estado === 'activo' && !isTerminado(i))
         .sort((a, b) => parseFecha(a.fecha, a.created_at).getTime() - parseFecha(b.fecha, b.created_at).getTime());
     const proximasDinamicas = items
-        .filter(i => (i.tipo === 'evento' || i.tipo === 'sorteo') && i.estado === 'proximo')
+        .filter(i => (i.tipo === 'evento' || i.tipo === 'sorteo') && i.estado === 'proximo' && !isTerminado(i))
         .sort((a, b) => parseFecha(a.fecha, a.created_at).getTime() - parseFecha(b.fecha, b.created_at).getTime());
 
     const eventosTerminados = items
-        .filter(i => (i.tipo === 'evento' || i.tipo === 'sorteo') && (i.estado === 'terminado' || i.estado === 'finalizado'))
+        .filter(i => (i.tipo === 'evento' || i.tipo === 'sorteo') && isTerminado(i))
         .sort((a, b) => parseFecha(b.fecha, b.created_at).getTime() - parseFecha(a.fecha, a.created_at).getTime());
 
     const displayProximas = proximasDinamicas.length > 0 ? proximasDinamicas : [{

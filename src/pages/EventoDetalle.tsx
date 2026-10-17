@@ -30,6 +30,21 @@ const EventoDetalle: React.FC = () => {
 
         if (slug) {
             fetchEvento();
+
+            const channel = supabase
+                .channel(`evento-live-${slug}`)
+                .on(
+                    'postgres_changes',
+                    { event: '*', schema: 'public', table: 'content_items' },
+                    () => {
+                        fetchEvento();
+                    }
+                )
+                .subscribe();
+
+            return () => {
+                supabase.removeChannel(channel);
+            };
         }
     }, [slug]);
 
