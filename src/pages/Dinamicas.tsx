@@ -186,35 +186,17 @@ const DinamicasCarousel: React.FC<{ items: any[] }> = ({ items }) => {
     );
 };
 
-const DINAMICAS_CACHE_KEY = 'tokkii_web_dinamicas_cache_v1';
-const DINAMICAS_CACHE_TIME_KEY = 'tokkii_web_dinamicas_cache_time_v1';
-const DINAMICAS_CACHE_TTL = 20 * 60 * 1000; // 20 minutos
-
 const Dinamicas: React.FC = () => {
     const [items, setItems] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchItems = async (forceRefresh = false) => {
-            if (!forceRefresh) {
-                try {
-                    const cachedRaw = localStorage.getItem(DINAMICAS_CACHE_KEY);
-                    const cachedTime = localStorage.getItem(DINAMICAS_CACHE_TIME_KEY);
-                    const age = Date.now() - Number(cachedTime || 0);
-
-                    if (cachedRaw && age < DINAMICAS_CACHE_TTL) {
-                        const parsed = JSON.parse(cachedRaw);
-                        if (Array.isArray(parsed)) {
-                            setItems(parsed);
-                            setLoading(false);
-                            console.log("⚡ [Web Dinámicas Cache] Datos cargados desde localStorage (0 llamadas Supabase)");
-                            return;
-                        }
-                    }
-                } catch (e) {
-                    console.warn("Error leyendo caché de dinámicas:", e);
-                }
-            }
+        const fetchItems = async () => {
+            // Limpiar cualquier residuo de caché
+            try {
+                localStorage.removeItem('tokkii_web_dinamicas_cache_v1');
+                localStorage.removeItem('tokkii_web_dinamicas_cache_time_v1');
+            } catch {}
 
             const { data, error } = await supabase
                 .from('content_items')
@@ -226,12 +208,6 @@ const Dinamicas: React.FC = () => {
                 console.error('Error fetching dynamic items:', error);
             } else {
                 setItems(data || []);
-                try {
-                    localStorage.setItem(DINAMICAS_CACHE_KEY, JSON.stringify(data || []));
-                    localStorage.setItem(DINAMICAS_CACHE_TIME_KEY, String(Date.now()));
-                } catch (e) {
-                    console.warn("Error guardando caché de dinámicas:", e);
-                }
             }
             setLoading(false);
         };
@@ -245,7 +221,7 @@ const Dinamicas: React.FC = () => {
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'content_items' },
                 () => {
-                    fetchItems(true);
+                    fetchItems();
                 }
             )
             .subscribe();

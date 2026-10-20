@@ -13,36 +13,15 @@ const EventoDetalle: React.FC = () => {
     const [showForm, setShowForm] = React.useState(false);
 
     React.useEffect(() => {
-        const fetchEvento = async (forceRefresh = false) => {
-            if (!forceRefresh && slug) {
-                try {
-                    // 1. Revisar si ya está en el caché de la lista de dinámicas
-                    const listRaw = localStorage.getItem('tokkii_web_dinamicas_cache_v1');
-                    if (listRaw) {
-                        const list = JSON.parse(listRaw);
-                        const match = list.find((it: any) => it.slug === slug);
-                        if (match) {
-                            setEvento(match);
-                            setLoading(false);
-                            console.log("⚡ [Web Evento Cache] Encontrado en caché de dinámicas (0 llamadas Supabase)");
-                            return;
-                        }
-                    }
+        const fetchEvento = async () => {
+            if (!slug) return;
 
-                    // 2. Revisar caché individual
-                    const itemRaw = localStorage.getItem(`tokkii_web_evento_${slug}`);
-                    const itemTime = localStorage.getItem(`tokkii_web_evento_${slug}_time`);
-                    const age = Date.now() - Number(itemTime || 0);
-                    if (itemRaw && age < 20 * 60 * 1000) {
-                        setEvento(JSON.parse(itemRaw));
-                        setLoading(false);
-                        console.log("⚡ [Web Evento Cache] Cargado desde caché individual (0 llamadas Supabase)");
-                        return;
-                    }
-                } catch (e) {
-                    console.warn("Error leyendo caché de evento:", e);
-                }
-            }
+            // Limpieza de caché residual
+            try {
+                localStorage.removeItem(`tokkii_web_evento_${slug}`);
+                localStorage.removeItem(`tokkii_web_evento_${slug}_time`);
+                localStorage.removeItem('tokkii_web_dinamicas_cache_v1');
+            } catch {}
 
             const { data, error } = await supabase
                 .from('content_items')
@@ -54,12 +33,6 @@ const EventoDetalle: React.FC = () => {
                 console.error('Error fetching event details:', error);
             } else {
                 setEvento(data);
-                if (data && slug) {
-                    try {
-                        localStorage.setItem(`tokkii_web_evento_${slug}`, JSON.stringify(data));
-                        localStorage.setItem(`tokkii_web_evento_${slug}_time`, String(Date.now()));
-                    } catch (e) {}
-                }
             }
             setLoading(false);
         };
@@ -73,7 +46,7 @@ const EventoDetalle: React.FC = () => {
                     'postgres_changes',
                     { event: '*', schema: 'public', table: 'content_items' },
                     () => {
-                        fetchEvento(true);
+                        fetchEvento();
                     }
                 )
                 .subscribe();

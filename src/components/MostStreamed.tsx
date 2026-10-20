@@ -20,29 +20,13 @@ const MostStreamed: React.FC<MostStreamedProps> = ({ hideHeader = false, onGames
     const [streamedData, setStreamedData] = useState<StreamedItem[]>([]);
     const [loading, setLoading] = useState(true);
 
-const STREAMED_CACHE_KEY = 'tokkii_web_most_streamed_cache_v1';
-const STREAMED_CACHE_TIME_KEY = 'tokkii_web_most_streamed_cache_time_v1';
-const STREAMED_CACHE_TTL = 30 * 60 * 1000; // 30 minutos
-
     useEffect(() => {
         const fetchStreamed = async () => {
+            // Limpiar cualquier residuo de caché
             try {
-                const cachedRaw = localStorage.getItem(STREAMED_CACHE_KEY);
-                const cachedTime = localStorage.getItem(STREAMED_CACHE_TIME_KEY);
-                const age = Date.now() - Number(cachedTime || 0);
-
-                if (cachedRaw && age < STREAMED_CACHE_TTL) {
-                    const parsed = JSON.parse(cachedRaw);
-                    if (Array.isArray(parsed) && parsed.length > 0) {
-                        setStreamedData(parsed);
-                        setLoading(false);
-                        console.log("⚡ [Web MostStreamed Cache] Cargado desde localStorage (0 llamadas Supabase)");
-                        return;
-                    }
-                }
-            } catch (e) {
-                console.warn("Error leyendo caché most_streamed:", e);
-            }
+                localStorage.removeItem('tokkii_web_most_streamed_cache_v1');
+                localStorage.removeItem('tokkii_web_most_streamed_cache_time_v1');
+            } catch {}
 
             try {
                 const { data, error } = await supabase
@@ -52,10 +36,6 @@ const STREAMED_CACHE_TTL = 30 * 60 * 1000; // 30 minutos
 
                 if (error) throw error;
                 setStreamedData(data || []);
-                try {
-                    localStorage.setItem(STREAMED_CACHE_KEY, JSON.stringify(data || []));
-                    localStorage.setItem(STREAMED_CACHE_TIME_KEY, String(Date.now()));
-                } catch (e) {}
             } catch (err) {
                 console.error("Error fetching most streamed from Supabase 2:", err);
             } finally {

@@ -37,32 +37,16 @@ const Noticias = () => {
                 const wpPosts = await getWordPressNews({ perPage: 100 });
                 setPosts(wpPosts || []);
 
-                // 2. Obtener sorteos y eventos activos para el sidebar (reusando caché local para ahorrar egress)
-                let sideDataLoaded = false;
-                try {
-                    const dinamicasRaw = localStorage.getItem('tokkii_web_dinamicas_cache_v1');
-                    if (dinamicasRaw) {
-                        const allDinamicas = JSON.parse(dinamicasRaw);
-                        if (Array.isArray(allDinamicas) && allDinamicas.length > 0) {
-                            const cachedSorteos = allDinamicas.filter((d: any) => d.tipo === 'sorteo' && d.estado === 'activo').slice(0, 2);
-                            const cachedEventos = allDinamicas.filter((d: any) => d.tipo === 'evento' && d.estado === 'activo').slice(0, 2);
-                            setSideItems({ sorteos: cachedSorteos, eventos: cachedEventos });
-                            sideDataLoaded = true;
-                        }
-                    }
-                } catch (e) {}
+                // 2. Obtener sorteos y eventos activos para el sidebar en vivo directamente desde Supabase
+                const [{ data: sorteosData }, { data: eventosData }] = await Promise.all([
+                    supabase.from('content_items').select('*').eq('tipo', 'sorteo').eq('estado', 'activo').order('created_at', { ascending: false }).limit(2),
+                    supabase.from('content_items').select('*').eq('tipo', 'evento').eq('estado', 'activo').order('created_at', { ascending: false }).limit(2)
+                ]);
 
-                if (!sideDataLoaded) {
-                    const [{ data: sorteosData }, { data: eventosData }] = await Promise.all([
-                        supabase.from('content_items').select('*').eq('tipo', 'sorteo').eq('estado', 'activo').order('created_at', { ascending: false }).limit(2),
-                        supabase.from('content_items').select('*').eq('tipo', 'evento').eq('estado', 'activo').order('created_at', { ascending: false }).limit(2)
-                    ]);
-
-                    setSideItems({
-                        sorteos: sorteosData || [],
-                        eventos: eventosData || []
-                    });
-                }
+                setSideItems({
+                    sorteos: sorteosData || [],
+                    eventos: eventosData || []
+                });
             } catch (error) {
                 console.error('Error fetching news content:', error);
                 setPosts([]);
