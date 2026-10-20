@@ -86,3 +86,18 @@
     color: white;
     transform: rotate(90deg) scale(1.08);
 }
+
+
+@media (max-width: 480px) {
+  .participation-overlay {
+    padding: 10px;
+  }
+  .participation-modal {
+    max-height: calc(100dvh - 20px);
+    overflow-y: auto;
+  }
+  .participation-modal .contact-card {
+    padding: 1.5rem 1.15rem !important;
+    border-radius: 20px;
+  }
+}

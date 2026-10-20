@@ -9,6 +9,7 @@ const Navbar: React.FC = () => {
     const [profile, setProfile] = useState<any>(null);
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showUserMenu, setShowUserMenu] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [loginConsent, setLoginConsent] = useState(false);
     const userMenuTimeoutRef = React.useRef<any>(null);
 
@@ -401,9 +402,176 @@ const Navbar: React.FC = () => {
                             </button>
                         )}
                     </div>
+
+                    {/* Hamburger Button for Mobile / Tablets */}
+                    <button 
+                        type="button"
+                        className={`mobile-menu-toggle ${isMobileMenuOpen ? 'active' : ''}`}
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        aria-label="Abrir menú de navegación"
+                    >
+                        <span className="bar" />
+                        <span className="bar" />
+                        <span className="bar" />
+                    </button>
                 </div>
             </div>
         </nav>
+
+        {/* Mobile Drawer Overlay */}
+        {isMobileMenuOpen && (
+            <div 
+                className="mobile-drawer-overlay" 
+                onClick={() => setIsMobileMenuOpen(false)}
+            />
+        )}
+
+        {/* Mobile Slide-Out Drawer */}
+        <aside className={`mobile-nav-drawer ${isMobileMenuOpen ? 'open' : ''}`}>
+            <div className="mobile-drawer-header">
+                <Link to="/" className="logo-container" onClick={() => setIsMobileMenuOpen(false)}>
+                    <img src="/Logo_2.png" alt="EvilTokkii Logo" className="logo-img" />
+                    <span className="logo-text">EvilTokkii</span>
+                </Link>
+                <button 
+                    type="button" 
+                    className="mobile-drawer-close"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    aria-label="Cerrar menú"
+                >
+                    ✕
+                </button>
+            </div>
+
+            {/* User Login Section in Mobile Drawer */}
+            <div className="mobile-drawer-user">
+                {user ? (
+                    <div className="mobile-user-card">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            {(profile?.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || user.user_metadata?.profile_image_url) && (
+                                <img 
+                                    src={profile?.avatar_url || user?.user_metadata?.avatar_url || user?.user_metadata?.picture || user?.user_metadata?.profile_image_url || ''} 
+                                    referrerPolicy="no-referrer" 
+                                    alt="Avatar" 
+                                    className="mobile-user-avatar"
+                                />
+                            )}
+                            <div>
+                                <div style={{ fontWeight: 'bold', fontSize: '0.9rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                    {profile?.username || user.user_metadata?.preferred_username || user.user_metadata?.name || user.user_metadata?.full_name || 'Usuario'}
+                                    {renderBadge(profile?.role || 'usuario')}
+                                </div>
+                                <span style={{ fontSize: '0.8rem', color: 'var(--yellow)', fontWeight: 'bold' }}>
+                                    {profile?.points ?? 0} Pts
+                                </span>
+                            </div>
+                        </div>
+                        <div className="mobile-user-actions">
+                            <Link 
+                                to="/perfil" 
+                                className="mobile-user-link"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                👤 Mi perfil
+                            </Link>
+                            <button 
+                                onClick={() => {
+                                    setIsMobileMenuOpen(false);
+                                    handleLogout();
+                                }}
+                                className="mobile-user-logout"
+                            >
+                                🔌 Desconectar
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <button 
+                        onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            setShowLoginModal(true);
+                        }} 
+                        className="btn secondary mobile-login-btn"
+                    >
+                        🎮 Iniciar sesión con Twitch
+                    </button>
+                )}
+            </div>
+
+            {/* Mobile Navigation Links */}
+            <ul className="mobile-drawer-links">
+                <li>
+                    <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setIsMobileMenuOpen(false)} end>
+                        🏠 Home
+                    </NavLink>
+                </li>
+                <li style={{ position: 'relative' }}>
+                    <NavLink 
+                        to="/noticias" 
+                        className={({ isActive }) => (isActive ? 'active' : '')}
+                        onClick={() => {
+                            handleSectionClick('noticias');
+                            setIsMobileMenuOpen(false);
+                        }}
+                    >
+                        📰 Noticias
+                    </NavLink>
+                    {unreadSections.noticias && <span className="nav-badge-dot" />}
+                </li>
+                <li style={{ position: 'relative' }}>
+                    <NavLink 
+                        to="/dinamicas" 
+                        className={({ isActive }) => (isActive ? 'active' : '')}
+                        onClick={() => {
+                            handleSectionClick('dinamicas');
+                            setIsMobileMenuOpen(false);
+                        }}
+                    >
+                        🎁 Dinámicas
+                    </NavLink>
+                    {unreadSections.dinamicas && <span className="nav-badge-dot" />}
+                </li>
+                <li>
+                    <NavLink to="/sobre" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setIsMobileMenuOpen(false)}>
+                        💖 Sobre EvilTokkii
+                    </NavLink>
+                </li>
+                <li style={{ position: 'relative' }}>
+                    <NavLink 
+                        to="/minijuegos" 
+                        className={({ isActive }) => (isActive ? 'active' : '')}
+                        onClick={() => {
+                            handleSectionClick('minijuegos');
+                            setIsMobileMenuOpen(false);
+                        }}
+                    >
+                        🕹️ Minijuegos
+                    </NavLink>
+                    {unreadSections.minijuegos && <span className="nav-badge-dot" />}
+                </li>
+                <li>
+                    <NavLink to="/tierlists" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setIsMobileMenuOpen(false)}>
+                        📊 Tierlists
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/ayuda" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setIsMobileMenuOpen(false)}>
+                        ❓ Ayuda
+                    </NavLink>
+                </li>
+                <li style={{ marginTop: '0.75rem' }}>
+                    <a 
+                        href={(import.meta as any).env?.VITE_TCG_URL || 'http://localhost:5173'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mobile-tcg-pill"
+                        title="Abrir Colección Tokkii TCG"
+                    >
+                        ✨ Abrir Colección TCG ✨
+                    </a>
+                </li>
+            </ul>
+        </aside>
 
             {/* Twitch Login Modal Dialog */}
             {showLoginModal && !user && createPortal((

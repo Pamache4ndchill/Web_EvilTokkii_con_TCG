@@ -991,3 +991,10 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+@media (max-width: 650px) {
+  .arcade-hero-title .hero-title-line {
+    white-space: normal;
+  }
+}
