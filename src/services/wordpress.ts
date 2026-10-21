@@ -127,31 +127,77 @@ export function transformWordPressPost(post: any): WPNewsItem {
   }
 
   // 4. Extraer y Normalizar Categoría (Videojuegos vs Anime)
+  // PRIORIDAD 1: Categorías oficiales asignadas en WordPress (taxonomy === 'category')
+  const allTerms = (post?._embedded?.['wp:term'] || []).flat();
+  const categoryTerms = allTerms.filter((term: any) => term?.taxonomy === 'category');
+  const postCategoryIds: number[] = Array.isArray(post?.categories) ? post.categories : [];
+
+  // En WordPress de EvilTokkii: 691508 es 'Videojuego', 1122 es 'Anime', 1 es 'Uncategorized'
+  const isExplicitVideojuegos = 
+    categoryTerms.some((term: any) => {
+      const slug = (term?.slug || '').toLowerCase();
+      const name = (term?.name || '').toLowerCase();
+      return ['videojuego', 'videojuegos', 'gaming', 'games', 'game', 'juegos', 'juego'].includes(slug) ||
+             ['videojuego', 'videojuegos', 'gaming', 'games', 'juegos', 'juego'].includes(name) ||
+             term?.id === 691508;
+    }) || postCategoryIds.includes(691508);
+
+  const isExplicitAnime = 
+    categoryTerms.some((term: any) => {
+      const slug = (term?.slug || '').toLowerCase();
+      const name = (term?.name || '').toLowerCase();
+      return ['anime', 'animes', 'manga', 'otaku'].includes(slug) ||
+             ['anime', 'animes', 'manga', 'otaku'].includes(name) ||
+             term?.id === 1122;
+    }) || postCategoryIds.includes(1122);
+
   let categorySlug: 'videojuegos' | 'animes' = 'videojuegos';
   let categoryLabel: 'VIDEOJUEGOS' | 'ANIME' = 'VIDEOJUEGOS';
 
-  if (post?._embedded?.['wp:term']) {
-    const terms = post._embedded['wp:term'].flat();
-    const isAnime = terms.some((term: any) => {
+  if (isExplicitVideojuegos && !isExplicitAnime) {
+    // Si en WordPress fue categorizada como Videojuego, RESPETARLA SIEMPRE (incluso si habla de un anime en el texto)
+    categorySlug = 'videojuegos';
+    categoryLabel = 'VIDEOJUEGOS';
+  } else if (isExplicitAnime && !isExplicitVideojuegos) {
+    // Si en WordPress fue categorizada como Anime, respetarla siempre
+    categorySlug = 'animes';
+    categoryLabel = 'ANIME';
+  } else {
+    // PRIORIDAD 2: Etiquetas (tags) si la categoría es 'Uncategorized' o ambigua
+    const tagTerms = allTerms.filter((term: any) => term?.taxonomy === 'post_tag');
+    const isTagAnime = tagTerms.some((term: any) => {
       const slug = (term?.slug || '').toLowerCase();
       const name = (term?.name || '').toLowerCase();
-      return ['anime', 'animes', 'manga', 'otaku', 'japon'].includes(slug) || 
-             ['anime', 'animes', 'manga', 'otaku'].includes(name);
+      return ['anime', 'animes', 'manga', 'otaku'].includes(slug) || ['anime', 'animes', 'manga', 'otaku'].includes(name);
+    });
+    const isTagVideojuegos = tagTerms.some((term: any) => {
+      const slug = (term?.slug || '').toLowerCase();
+      const name = (term?.name || '').toLowerCase();
+      return ['videojuego', 'videojuegos', 'gaming', 'games', 'game'].includes(slug) || ['videojuego', 'videojuegos', 'gaming', 'games'].includes(name);
     });
 
-    if (isAnime) {
+    if (isTagAnime && !isTagVideojuegos) {
       categorySlug = 'animes';
       categoryLabel = 'ANIME';
-    }
-  }
+    } else if (isTagVideojuegos && !isTagAnime) {
+      categorySlug = 'videojuegos';
+      categoryLabel = 'VIDEOJUEGOS';
+    } else {
+      // PRIORIDAD 3: Palabras clave en título y subtítulo (solo para noticias sin categoría definida)
+      const textToCheck = `${decodedTitle} ${cleanExcerpt}`.toLowerCase();
+      const animeKeywords = ['anime', 'manga', 'crunchyroll', 'episodio', 'capitulo', 'temporada', 'doblaje', 'pelicula anime', 'ova'];
+      const gameKeywords = ['videojuego', 'videojuegos', 'nintendo', 'switch', 'playstation', 'ps5', 'xbox', 'game pass', 'steam', 'pc', 'rpg', 'gta', 'valorant', 'remastered', 'gameplay'];
+      
+      const hasAnimeKeyword = animeKeywords.some(k => textToCheck.includes(k));
+      const hasGameKeyword = gameKeywords.some(k => textToCheck.includes(k));
 
-  // Si no se detectó por term, buscar en título o contenido
-  if (categorySlug === 'videojuegos') {
-    const textToCheck = `${decodedTitle} ${cleanExcerpt}`.toLowerCase();
-    const animeKeywords = ['anime', 'manga', 'crunchyroll', 'demon slayer', 'kimetsu', 'shingeki', 'jujutsu', 'one piece', 'dragon ball', 'naruto', 'solo leveling'];
-    if (animeKeywords.some(k => textToCheck.includes(k))) {
-      categorySlug = 'animes';
-      categoryLabel = 'ANIME';
+      if (hasAnimeKeyword && !hasGameKeyword) {
+        categorySlug = 'animes';
+        categoryLabel = 'ANIME';
+      } else {
+        categorySlug = 'videojuegos';
+        categoryLabel = 'VIDEOJUEGOS';
+      }
     }
   }
 
