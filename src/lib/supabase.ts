@@ -12,3 +12,9 @@ const supabaseMinigamesAnonKey = import.meta.env.VITE_SUPABASE_MINIGAMES_ANON_KE
 
 export const supabaseMinigames = createClient(supabaseMinigamesUrl, supabaseMinigamesAnonKey);
 export const supabaseAuth = supabaseMinigames;
+
+// 3. Supabase Builder / Database Central (hddzijixsigsqsmabtej)
+const supabaseBuilderUrl = import.meta.env.VITE_SUPABASE_BUILDER_URL || 'https://hddzijixsigsqsmabtej.supabase.co';
+const supabaseBuilderAnonKey = import.meta.env.VITE_SUPABASE_BUILDER_ANON_KEY || 'sb_publishable_bJGAVsHsVrSu2KAhbEC7DA_DpYnxDAp';
+
+export const supabaseBuilder = createClient(supabaseBuilderUrl, supabaseBuilderAnonKey);

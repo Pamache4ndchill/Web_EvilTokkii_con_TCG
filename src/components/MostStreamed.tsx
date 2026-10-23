@@ -1,6 +1,6 @@
 import { resolveAssetUrl } from '../utils/assets';
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase, supabaseBuilder } from '../lib/supabase';
 
 interface StreamedItem {
     id: number;
@@ -29,15 +29,26 @@ const MostStreamed: React.FC<MostStreamedProps> = ({ hideHeader = false, onGames
             } catch {}
 
             try {
-                const { data, error } = await supabase
+                // Consultar en la base de datos principal del Builder (hddzijixsigsqsmabtej)
+                let { data, error } = await supabaseBuilder
                     .from('most_streamed')
                     .select('*')
                     .order('order_index', { ascending: true });
 
-                if (error) throw error;
+                // Fallback si la tabla o datos aún no existen en builder
+                if (error || !data || data.length === 0) {
+                    const fallback = await supabase
+                        .from('most_streamed')
+                        .select('*')
+                        .order('order_index', { ascending: true });
+                    if (!fallback.error && fallback.data && fallback.data.length > 0) {
+                        data = fallback.data;
+                    }
+                }
+
                 setStreamedData(data || []);
             } catch (err) {
-                console.error("Error fetching most streamed from Supabase 2:", err);
+                console.error("Error fetching most streamed:", err);
             } finally {
                 setLoading(false);
             }
